@@ -25,8 +25,8 @@ public class Tp3 implements ActionListener{
         
         // JPanel HAUT (avec le menu deroulant)
         JPanel panneauHaut = new JPanel ();
-       // panneauHaut.setBorder ( BorderFactory.createLoweredBevelBorder() );
-        panneauHaut.setSize ( 500, 60 );
+        panneauHaut.setBorder ( BorderFactory.createLoweredBevelBorder() );
+        panneauHaut.setSize ( 100, 60 );
         panneauHaut.add ( menu );
         
         
@@ -35,17 +35,62 @@ public class Tp3 implements ActionListener{
       //  panneauBas.setBorder ( BorderFactory.createEtchedBorder() );
         panneauBas.setSize ( 300, 60 );
         panneauBas.add ( new JLabel ( "les boutons" ) );
+        
+        	//  Bouton afficher les infos
+    		JButton info = new JButton("Informations");
+    		info.setBounds(10, 10, 110, 20);
+    		
+    		//	Bouton ajouter
+    		JButton ajouter = new JButton("Ajouter");
+    		ajouter.setBounds(10, 40, 110, 20);
+    		
+    		//	Bouton retirer
+    		JButton retirer = new JButton("Retirer");
+    		retirer.setBounds(10, 70, 110, 20);
+    				
+    		//	Bouton rechercher 
+    		JButton rechercher = new JButton("Rechercher");
+    		rechercher.setBounds(10, 100, 110, 20);		
+    		
+    		//	Bouton eliminer 
+    		JButton eliminer = new JButton("Eliminer");
+    		eliminer.setBounds(10, 130, 110, 20);		
+    		
+    		//	Bouton nouveau 
+    		JButton nouveau = new JButton("Nouveau");
+    		nouveau.setBounds(10, 160, 110, 20);				
+    		
+    		//	Bouton contenu 
+    		JButton contenu = new JButton("Contenu");
+    		contenu.setBounds(10, 190, 110, 20);		
+    		
+    		//	Bouton enregistrer 
+    		JButton enregistrer = new JButton("Enregistrer");
+    		enregistrer.setBounds(10, 220, 110, 20);		
+    		
+    		//	Bouton quitter 
+    		JButton quitter = new JButton("Quitter");
+    		quitter.setBounds(10, 250, 110, 20);
 
         
         // Ajout des composants        
         Container contenuFenetre = fenetre.getContentPane();
         contenuFenetre.setBackground ( Color.blue );
-        GridLayout disposition = new GridLayout(2, 1);  
+        GridLayout disposition = new GridLayout(10, 1);  
         
         
         contenuFenetre.setLayout(disposition);
         contenuFenetre.add ( panneauHaut);
-        contenuFenetre.add ( panneauBas);
+        
+        contenuFenetre.add(info);
+        contenuFenetre.add(ajouter);
+        contenuFenetre.add(retirer);
+        contenuFenetre.add(rechercher);
+        contenuFenetre.add(eliminer);
+        contenuFenetre.add(nouveau);
+        contenuFenetre.add(contenu);
+        contenuFenetre.add(enregistrer);
+        contenuFenetre.add(quitter);
         
         // Afficher la fenetre
         fenetre.setVisible ( true );

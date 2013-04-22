@@ -11,79 +11,44 @@ public class Tp3 implements ActionListener{
 
 	public Tp3(){
 	
-// Definition de la fenetre
+		// Definition de la fenetre
+        JFrame fenetre = new JFrame("I n v e n t a i r e");
+		fenetre.setBounds( 200, 200, 400, 600 );
+		fenetre.setLayout ( new FlowLayout() );
+		
+		
+		// Menu deroulant
+		JComboBox menu = new JComboBox ();
+		menu.addItem ( "Selectionnez un item" );
+		menu.addItem ( "Choix 2" );
         
-        JFrame uneFenetre = new JFrame( "Exemple avec JPanel" );
-        uneFenetre.setBounds ( 100, 100, 500, 600 );
-        uneFenetre.setLayout ( new FlowLayout() );  // Pour positionner correctement les composants
         
-        // Definition d'un bouton
+        // JPanel HAUT (avec le menu deroulant)
+        JPanel panneauHaut = new JPanel ();
+       // panneauHaut.setBorder ( BorderFactory.createLoweredBevelBorder() );
+        panneauHaut.setSize ( 500, 60 );
+        panneauHaut.add ( menu );
         
-        JButton unBouton = new JButton ( "bouton" );
-        unBouton.setBounds ( 400, 10, 85, 20 );
-        unBouton.setFont ( new Font ( "Times", Font.ITALIC, 14 ) );
         
-        // Definition d'un JTextField
-        
-        JTextField unChampTexte = new JTextField ( "Toto" );
-        unChampTexte.setSize ( 300, 60 );
-        unChampTexte.setFont ( new Font ( "Courier", Font.PLAIN, 48 ) );
-        unChampTexte.setHorizontalAlignment ( JTextField.RIGHT ); // par rapport au JTextField
+        // JPanel BAS (les boutons)
+        JPanel panneauBas = new JPanel ();
+      //  panneauBas.setBorder ( BorderFactory.createEtchedBorder() );
+        panneauBas.setSize ( 300, 60 );
+        panneauBas.add ( new JLabel ( "les boutons" ) );
 
         
-        // Definition d'un autre JTextField
+        // Ajout des composants        
+        Container contenuFenetre = fenetre.getContentPane();
+        contenuFenetre.setBackground ( Color.blue );
+        GridLayout disposition = new GridLayout(2, 1);  
         
-        JTextField unChampTexteAutre = new JTextField ( "un champ de texte" );
-        unChampTexteAutre.setSize ( 200, 20 );
-        unChampTexteAutre.setLocation ( 400, 100 );
-        unChampTexteAutre.setFont ( new Font ( "Times", Font.PLAIN, 24 ) );
-        unChampTexteAutre.setHorizontalAlignment ( JTextField.LEFT ); // par rapport au JTextField
-
         
-        // Definition d'un autre JLabel
+        contenuFenetre.setLayout(disposition);
+        contenuFenetre.add ( panneauHaut);
+        contenuFenetre.add ( panneauBas);
         
-        JLabel unLabelAutre = new JLabel ();
-        unLabelAutre.setText ( "un JLabel" );
-        unLabelAutre.setBounds ( 0, 200, 200, 50 );
-        unLabelAutre.setFont ( new Font ( "Arial", Font.ITALIC, 24 ) );
-        unLabelAutre.setHorizontalAlignment ( JLabel.CENTER );
-        unLabelAutre.setVerticalAlignment ( JLabel.BOTTOM );
-        
-        // Definition d'un panneau JPanel
-        
-        JPanel unPanneau = new JPanel ();
-        unPanneau.setLayout ( new BorderLayout() );
-        
-        unPanneau.setBorder ( BorderFactory.createLineBorder ( Color.BLUE ) );
-        unPanneau.add ( new JLabel ( "Dans le panneau nord" ), BorderLayout.NORTH );
-        unPanneau.add ( new JLabel ( "Dans le panneau sud" ), BorderLayout.SOUTH );
-        unPanneau.add ( new JLabel ( "Dans le panneau est" ), BorderLayout.EAST );
-        unPanneau.add ( new JLabel ( "Dans le panneau centre" ), BorderLayout.CENTER );
-        unPanneau.add ( new JLabel ( "Dans le panneau ouest" ), BorderLayout.WEST );
-
-        JPanel unPanneau2 = new JPanel ();
-        unPanneau2.setBorder ( BorderFactory.createLoweredBevelBorder() );
-        unPanneau2.add ( new JButton ( "coucou" ) );
-        
-        JPanel unPanneau3 = new JPanel ();
-        unPanneau3.setBorder ( BorderFactory.createEtchedBorder() );
-        unPanneau3.add ( new JLabel ( "coucou" ) );
-
-        // Ajout des composants dans la fenetre
-        
-        Container contenuFenetre = uneFenetre.getContentPane();
-        contenuFenetre.setBackground ( Color.orange );
-        contenuFenetre.add ( unChampTexte );
-        contenuFenetre.add ( unChampTexteAutre );
-        contenuFenetre.add ( unLabelAutre );
-        contenuFenetre.add ( unBouton );
-        contenuFenetre.add ( unPanneau );
-        contenuFenetre.add ( unPanneau2 );
-        contenuFenetre.add ( unPanneau3 );
-        
-        // Affichage de la fenetre
-        
-        uneFenetre.setVisible ( true );
+        // Afficher la fenetre
+        fenetre.setVisible ( true );
 		
 		
 		
@@ -106,17 +71,6 @@ public class Tp3 implements ActionListener{
 		
 		
 		/*
-		JFrame fenetre = new JFrame("I n v e n t a i r e");
-		fenetre.setBounds( 200, 200, 400, 600 );
-		fenetre.setLayout (null);
-		
-		
-		
-		
-		//	Menu deroulant 
-		JComboBox menu = new JComboBox ();
-		menu.addItem ( "Selectionnez un item" );
-		menu.addItem ( "Choix 2" );
 		
 		//	Bouton afficher les infos
 		JButton info = new JButton("Informations");

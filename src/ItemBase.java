@@ -2,7 +2,7 @@
 /**
  * 131-INF2120-010 TP3
  * 
- * D��finit le minimum pour un item : son prix et sa description.
+ * Definit le minimum pour un item : son prix et sa description.
  * Il n'est pas possible de modifier la description de l'item.
  *
  * @author  Louise Laforest

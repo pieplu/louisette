@@ -11,190 +11,84 @@ public class Tp3 implements ActionListener{
 
 	public Tp3(){
 	
-		// Definition de la fenetre
+		// =====   LA FENETRE   =====
         JFrame fenetre = new JFrame("I n v e n t a i r e");
 		fenetre.setBounds( 200, 200, 400, 600 );
 		fenetre.setLayout ( new FlowLayout() );
 		
 		
-		// Menu deroulant
+		// =====   MENU DEROULANT   =====
 		JComboBox menu = new JComboBox ();
 		menu.addItem ( "Selectionnez un item" );
 		menu.addItem ( "Choix 2" );
+		
+		
+		//  =====   BOUTONS   =====
+		
+		JButton info = new JButton("Informations");
+		info.setBounds(10, 10, 110, 20);
+		
+		JButton ajouter = new JButton("Ajouter");
+		ajouter.setBounds(10, 40, 110, 20);
+		
+		JButton retirer = new JButton("Retirer");
+		retirer.setBounds(10, 70, 110, 20);
+		
+		JButton rechercher = new JButton("Rechercher");
+		rechercher.setBounds(10, 100, 110, 20);	
+		
+		JButton eliminer = new JButton("Eliminer");
+		eliminer.setBounds(10, 130, 110, 20);	
+		
+		JButton nouveau = new JButton("Nouveau");
+		nouveau.setBounds(10, 160, 110, 20);
+		
+ 		JButton contenu = new JButton("Contenu");
+		contenu.setBounds(10, 190, 110, 20);				
+
+		JButton enregistrer = new JButton("Enregistrer");
+		enregistrer.setBounds(10, 220, 110, 20);		
+
+		JButton quitter = new JButton("Quitter");
+		quitter.setBounds(10, 250, 110, 20);
         
         
         // JPanel HAUT (avec le menu deroulant)
         JPanel panneauHaut = new JPanel ();
         panneauHaut.setBorder ( BorderFactory.createLoweredBevelBorder() );
-        panneauHaut.setSize ( 100, 60 );
+        panneauHaut.setSize ( 400, 100 );
+        // AJOUT
         panneauHaut.add ( menu );
         
         
         // JPanel BAS (les boutons)
         JPanel panneauBas = new JPanel ();
-      //  panneauBas.setBorder ( BorderFactory.createEtchedBorder() );
-        panneauBas.setSize ( 300, 60 );
-        panneauBas.add ( new JLabel ( "les boutons" ) );
+        panneauBas.setBorder ( BorderFactory.createEtchedBorder() );
+        panneauBas.setSize ( 400, 500 );
+        panneauBas.setLayout(null);
+        // AJOUT
+        panneauBas.add(info);
+        panneauBas.add(ajouter);
+        panneauBas.add(retirer);
+        panneauBas.add(rechercher);
+        panneauBas.add(eliminer);
+        panneauBas.add(nouveau);
+        panneauBas.add(contenu);
+        panneauBas.add(enregistrer);
+        panneauBas.add(quitter);
         
-        	//  Bouton afficher les infos
-    		JButton info = new JButton("Informations");
-    		info.setBounds(10, 10, 110, 20);
-    		
-    		//	Bouton ajouter
-    		JButton ajouter = new JButton("Ajouter");
-    		ajouter.setBounds(10, 40, 110, 20);
-    		
-    		//	Bouton retirer
-    		JButton retirer = new JButton("Retirer");
-    		retirer.setBounds(10, 70, 110, 20);
-    				
-    		//	Bouton rechercher 
-    		JButton rechercher = new JButton("Rechercher");
-    		rechercher.setBounds(10, 100, 110, 20);		
-    		
-    		//	Bouton eliminer 
-    		JButton eliminer = new JButton("Eliminer");
-    		eliminer.setBounds(10, 130, 110, 20);		
-    		
-    		//	Bouton nouveau 
-    		JButton nouveau = new JButton("Nouveau");
-    		nouveau.setBounds(10, 160, 110, 20);				
-    		
-    		//	Bouton contenu 
-    		JButton contenu = new JButton("Contenu");
-    		contenu.setBounds(10, 190, 110, 20);		
-    		
-    		//	Bouton enregistrer 
-    		JButton enregistrer = new JButton("Enregistrer");
-    		enregistrer.setBounds(10, 220, 110, 20);		
-    		
-    		//	Bouton quitter 
-    		JButton quitter = new JButton("Quitter");
-    		quitter.setBounds(10, 250, 110, 20);
+        	
 
         
-        // Ajout des composants        
+        //  =====   CONTENEUR   =====       
         Container contenuFenetre = fenetre.getContentPane();
-        contenuFenetre.setBackground ( Color.blue );
-        GridLayout disposition = new GridLayout(10, 1);  
-        
-        
-        contenuFenetre.setLayout(disposition);
-        contenuFenetre.add ( panneauHaut);
-        
-        contenuFenetre.add(info);
-        contenuFenetre.add(ajouter);
-        contenuFenetre.add(retirer);
-        contenuFenetre.add(rechercher);
-        contenuFenetre.add(eliminer);
-        contenuFenetre.add(nouveau);
-        contenuFenetre.add(contenu);
-        contenuFenetre.add(enregistrer);
-        contenuFenetre.add(quitter);
+        contenuFenetre.setLayout(new BorderLayout());
+        contenuFenetre.add ( panneauHaut , BorderLayout.NORTH);
+        contenuFenetre.add ( panneauBas);
         
         // Afficher la fenetre
         fenetre.setVisible ( true );
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/*
-		
-		//	Bouton afficher les infos
-		JButton info = new JButton("Informations");
-		info.setBounds(10, 10, 110, 20);
-		
-		//	Bouton ajouter
-		JButton ajouter = new JButton("Ajouter");
-		ajouter.setBounds(10, 40, 110, 20);
-		
-		//	Bouton retirer
-		JButton retirer = new JButton("Retirer");
-		retirer.setBounds(10, 70, 110, 20);
-				
-		//	Bouton rechercher 
-		JButton rechercher = new JButton("Rechercher");
-		rechercher.setBounds(10, 100, 110, 20);		
-		
-		//	Bouton eliminer 
-		JButton eliminer = new JButton("Eliminer");
-		eliminer.setBounds(10, 130, 110, 20);		
-		
-		//	Bouton nouveau 
-		JButton nouveau = new JButton("Nouveau");
-		nouveau.setBounds(10, 160, 110, 20);				
-		
-		//	Bouton contenu 
-		JButton contenu = new JButton("Contenu");
-		contenu.setBounds(10, 190, 110, 20);		
-		
-		//	Bouton enregistrer 
-		JButton enregistrer = new JButton("Enregistrer");
-		enregistrer.setBounds(10, 220, 110, 20);		
-		
-		//	Bouton quitter 
-		JButton quitter = new JButton("Quitter");
-		quitter.setBounds(10, 250, 110, 20);	
-		
-		
-		//	Mise en page
-		JPanel panneauHaut = new JPanel();
-		panneauHaut.add(menu);
-		panneauHaut.setLayout (null);
-		
-		JPanel panneauBas = new JPanel();
-		panneauBas.add(info);
-		panneauBas.add(ajouter);
-		panneauBas.add(retirer);
-		panneauBas.add(rechercher);
-		panneauBas.add(eliminer);
-		panneauBas.add(nouveau);
-		panneauBas.add(contenu);
-		panneauBas.add(enregistrer);
-		panneauBas.add(quitter);
-		panneauBas.setLayout (null);
-		
-		panneauBas.setVisible ( true );
-		panneauHaut.setVisible ( true );
-
-		//	Conteneur
-		Container fenTp3 = fenetre.getContentPane();
-		
-		//fenTp3.add(panneauHaut);
-		//fenTp3.add(panneauBas);
-		
-		fenTp3.add(menu);
-		
-			Ajouts boutons
-		fenTp3.add(info);
-		fenTp3.add(ajouter);
-		fenTp3.add(retirer);
-		fenTp3.add(rechercher);
-		fenTp3.add(eliminer);
-		fenTp3.add(nouveau);
-		fenTp3.add(contenu);
-		fenTp3.add(enregistrer);
-		fenTp3.add(quitter);
-
-		fenetre.setVisible ( true );
-	*/
 	}
 	
 	

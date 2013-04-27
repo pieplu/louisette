@@ -131,7 +131,7 @@ public class Tp3 implements ActionListener{
 	public static BufferedReader chargerFichierText() throws FileNotFoundException {
 		BufferedReader listeTemporaire = null;
 		try {
-			String path = "src/pack/inventaire.txt";
+			String path = "inventaire.txt";
 			listeTemporaire = new BufferedReader(new FileReader(path));
 		} catch (FileNotFoundException e) {
 			System.out.println("Le fichier de sauvegarde est absent.");
@@ -318,8 +318,8 @@ public class Tp3 implements ActionListener{
 		
 		if(source == ajouter){
 			if (!menu.getSelectedItem().equals("Selectionnez un item")){
-				ItemInventaire itemSelectionner = trouverItemDansInventaire((String)menu.getSelectedItem());
-				String quantite = JOptionPane.showInputDialog(null, monterUnItem(itemSelectionner) + "\nQuantité à ajouté : \n" , "Saisie" , JOptionPane.INFORMATION_MESSAGE);
+				ItemInventaire itemSelect = trouverItemDansInventaire((String)menu.getSelectedItem());
+				String quantite = JOptionPane.showInputDialog(null, monterUnItem(itemSelect) + "\nQuantité à ajouté : \n" , "Saisie" , JOptionPane.INFORMATION_MESSAGE);
 				
 				int quant;
 				
@@ -329,7 +329,7 @@ public class Tp3 implements ActionListener{
 						if(quant <= 0){
 							JOptionPane.showMessageDialog(null, "Quantité négative ou null" , "Erreur" , JOptionPane.ERROR_MESSAGE);
 						}else{
-							ajouterQuantiteItem( itemSelectionner.getDescription(), quant);
+							ajouterQuantiteItem( itemSelect.getDescription(), quant);
 						}
 					}catch (NumberFormatException e){
 						JOptionPane.showMessageDialog(null, "Quantité non-numérique" , "Erreur" , JOptionPane.ERROR_MESSAGE);
@@ -344,8 +344,8 @@ public class Tp3 implements ActionListener{
 		
 		if(source == retirer){
 			if (!menu.getSelectedItem().equals("Selectionnez un item")){
-				ItemInventaire itemSelectionner = trouverItemDansInventaire((String)menu.getSelectedItem());
-				String quantite = JOptionPane.showInputDialog(null, monterUnItem(itemSelectionner) + "\nQuantité à retiré : \n" , "Saisie" , JOptionPane.INFORMATION_MESSAGE);
+				ItemInventaire itemSelect = trouverItemDansInventaire((String)menu.getSelectedItem());
+				String quantite = JOptionPane.showInputDialog(null, monterUnItem(itemSelect) + "\nQuantité à retiré : \n" , "Saisie" , JOptionPane.INFORMATION_MESSAGE);
 				
 				int quant;
 				
@@ -354,10 +354,10 @@ public class Tp3 implements ActionListener{
 						quant = Integer.parseInt(quantite);
 						if(quant <= 0){
 							JOptionPane.showMessageDialog(null, "Quantité négative ou null" , "Erreur" , JOptionPane.ERROR_MESSAGE);
-						} else if (itemSelectionner.getQuantite() < quant){
+						} else if (itemSelect.getQuantite() < quant){
 							JOptionPane.showMessageDialog(null, "Quantité insufisante en inventaire" , "Erreur" , JOptionPane.ERROR_MESSAGE);
 						}else{
-							retirerQuantiteItem( itemSelectionner.getDescription(), quant);
+							retirerQuantiteItem( itemSelect.getDescription(), quant);
 						}
 					}catch (NumberFormatException e){
 						JOptionPane.showMessageDialog(null, "Quantité non-numérique" , "Erreur" , JOptionPane.ERROR_MESSAGE);
@@ -374,17 +374,43 @@ public class Tp3 implements ActionListener{
 			
 				
 				String recherche = JOptionPane.showInputDialog(null,"\nChaine à recherché : \n" , "Saisie" , JOptionPane.INFORMATION_MESSAGE);
-				ItemInventaire itemSelectionner = trouverItemDansInventaire(recherche);
+				ItemInventaire itemSelect = trouverItemDansInventaire(recherche);
 				
-				if(itemSelectionner == null){
+				if(itemSelect == null){
 					JOptionPane.showMessageDialog(null, "Aucun item ne contient la chaîne " + recherche , "Résultat de la recherche de \"" + recherche +"\"" , JOptionPane.INFORMATION_MESSAGE);
 				}else{
 					JOptionPane.showMessageDialog(null, "Aucun item ne contient la chaîne " + recherche , "Résultat de la recherche de \"" + recherche +"\"" , JOptionPane.INFORMATION_MESSAGE);
 				}
 				JOptionPane.showMessageDialog(null, "Aucun item ne contient la chaîne " + recherche , "Résultat de la recherche de \"" + recherche +"\"" , JOptionPane.INFORMATION_MESSAGE);
-				
-			
+
 		}
+		
+		if(source == eliminer){
+			if (!menu.getSelectedItem().equals("Selectionnez un item")){
+				ItemInventaire itemSelect = trouverItemDansInventaire((String)menu.getSelectedItem());
+				
+				JOptionPane.showMessageDialog(null, "êtes vous sûr de vouloir éliminer totalement \"" + itemSelect +"\" ?", "Saisie" , JOptionPane.WARNING_MESSAGE);
+
+				
+				int quant = 0;
+				
+				
+
+						if(quant <= 0){
+							JOptionPane.showMessageDialog(null, "Quantité négative ou null" , "Erreur" , JOptionPane.ERROR_MESSAGE);
+						} else if (itemSelect.getQuantite() < quant){
+							JOptionPane.showMessageDialog(null, "Quantité insufisante en inventaire" , "Erreur" , JOptionPane.ERROR_MESSAGE);
+						}else{
+							retirerQuantiteItem( itemSelect.getDescription(), quant);
+						}
+			
+
+			}else{
+				JOptionPane.showMessageDialog(null, "Veuillez sélectionner un item" , "Erreur" , JOptionPane.ERROR_MESSAGE);
+			}
+			
+			
+	}
 		
 	}
 	

@@ -11,7 +11,7 @@
 
 public abstract class ItemBase {
     
-    private double prix; // prix �� l'unit��
+    private double prix; // prix a l'unite
     private String description; // description de l'item
 
     /**
@@ -24,7 +24,7 @@ public abstract class ItemBase {
 
 
     /**
-     * Construit un item avec la description sp��cifi��e et le prix 0
+     * Construit un item avec la description specifiee et le prix 0
      * @param desc la description
      */
     public ItemBase ( String desc ) {
@@ -32,7 +32,7 @@ public abstract class ItemBase {
     }
 
     /**
-     * Construit un item avec la description et le prix pass��s en param��tres.
+     * Construit un item avec la description et le prix passes en parametres.
      * @param desc la description
      * @param prix le prix
      */
@@ -66,8 +66,8 @@ public abstract class ItemBase {
     }
     
     /**
-     * D��termine si deux items sont ��gaux
-     * Les classes d��rivant de cette classe d��cideront ce qui fait que deux items sont ��gaux.
+     * Determine si deux items sont egaux
+     * Les classes derivant de cette classe decideront ce qui fait que deux items sont egaux.
      * @param nouveauPrix le nouveau prix de l'item
      */
     public abstract boolean equals ( Object o );

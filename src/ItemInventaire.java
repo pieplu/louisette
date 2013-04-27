@@ -2,8 +2,8 @@
 
 
 public class ItemInventaire extends ItemBase {
-
-	private int quantite; // quantite�de l'item en stock
+ 
+	private int quantite; // quantite de l'item en stock
 
 	public ItemInventaire (){
 		super ("", 0);

@@ -22,6 +22,7 @@ public class Tp3 implements ActionListener {
 	JButton rechercher;
 	JButton eliminer;
 	JButton nouveau;
+	JButton contenu;
 	JButton enregistrer;
 	JButton quitter;
 
@@ -68,13 +69,17 @@ public class Tp3 implements ActionListener {
 		nouveau = new JButton("Nouveau");
 		nouveau.setBounds(10, 160, 110, 20);
 		nouveau.addActionListener(this);
+		
+		contenu = new JButton("Contenu");
+		contenu.setBounds(10, 190, 110, 20);
+		contenu.addActionListener(this);
 
 		enregistrer = new JButton("Enregistrer");
-		enregistrer.setBounds(10, 190, 110, 20);
+		enregistrer.setBounds(10, 220, 110, 20);
 		enregistrer.addActionListener(this);
 
 		quitter = new JButton("Quitter");
-		quitter.setBounds(10, 220, 110, 20);
+		quitter.setBounds(10, 250, 110, 20);
 		quitter.addActionListener(this);
 
 		// JPanel HAUT (avec le menu deroulant)
@@ -96,6 +101,7 @@ public class Tp3 implements ActionListener {
 		panneauBas.add(rechercher);
 		panneauBas.add(eliminer);
 		panneauBas.add(nouveau);
+		panneauBas.add(contenu);
 		panneauBas.add(enregistrer);
 		panneauBas.add(quitter);
 
@@ -427,21 +433,45 @@ public class Tp3 implements ActionListener {
 
 		if (source == eliminer) {
 			if (!menu.getSelectedItem().equals("Selectionnez un item")) {
+				
 				ItemInventaire itemSelect = trouverItemDansInventaire((String) menu
 						.getSelectedItem());
-				JOptionPane.showMessageDialog(null,
-						"êtes vous sûr de vouloir éliminer totalement \""
-								+ itemSelect.getDescription() + "\" ?",
-						"Saisie", JOptionPane.WARNING_MESSAGE);
-
-				int quant = itemSelect.getQuantite();
-				retirerQuantiteItem(itemSelect.getDescription(), quant);
-				menu.removeItem(itemSelect.getDescription());
+				int choix = JOptionPane.showConfirmDialog(null, "êtes vous sûr de vouloir éliminer totalement \""
+						+ itemSelect.getDescription() + "\" ?", "T'es-tu-sûr?", JOptionPane.WARNING_MESSAGE);
+				
+				if(choix == JOptionPane.OK_OPTION){
+					int quant = itemSelect.getQuantite();
+					retirerQuantiteItem(itemSelect.getDescription(), quant);
+					menu.removeItem(itemSelect.getDescription());
+					// A FAIRE:  éliminer du fichier
+				}
+				
 			} else {
 				JOptionPane.showMessageDialog(null,
 						"Veuillez sélectionner un item", "Erreur",
 						JOptionPane.ERROR_MESSAGE);
 			}
+		}
+		
+		
+		if (source == contenu) {
+			
+			
+			JOptionPane.showMessageDialog(null,
+					"Le contenu  \""
+							+ "\" ?",
+					"Saisie", JOptionPane.INFORMATION_MESSAGE);
+
+	}
+		
+		if (source == nouveau) {
+			
+				
+				JOptionPane.showInputDialog(null,
+						"Entrez un  \""
+								+ "\" ?",
+						"Saisie", JOptionPane.QUESTION_MESSAGE);
+
 		}
 
 	}

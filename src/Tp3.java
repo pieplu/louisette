@@ -389,20 +389,12 @@ public class Tp3 implements ActionListener{
 			if (!menu.getSelectedItem().equals("Selectionnez un item")){
 				ItemInventaire itemSelect = trouverItemDansInventaire((String)menu.getSelectedItem());
 				
-				JOptionPane.showMessageDialog(null, "êtes vous sûr de vouloir éliminer totalement \"" + itemSelect +"\" ?", "Saisie" , JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "êtes vous sûr de vouloir éliminer totalement \"" + itemSelect.getDescription() +"\" ?", "Saisie" , JOptionPane.WARNING_MESSAGE);
 
-				
-				int quant = 0;
-				
-				
-
-						if(quant <= 0){
-							JOptionPane.showMessageDialog(null, "Quantité négative ou null" , "Erreur" , JOptionPane.ERROR_MESSAGE);
-						} else if (itemSelect.getQuantite() < quant){
-							JOptionPane.showMessageDialog(null, "Quantité insufisante en inventaire" , "Erreur" , JOptionPane.ERROR_MESSAGE);
-						}else{
-							retirerQuantiteItem( itemSelect.getDescription(), quant);
-						}
+				int quant = itemSelect.getQuantite();
+	
+				retirerQuantiteItem( itemSelect.getDescription(), quant);
+				menu.removeItem ( itemSelect.getDescription() );
 			
 
 			}else{

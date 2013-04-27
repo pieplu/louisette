@@ -1,3 +1,4 @@
+package pack;
 
 
 public class ItemInventaire extends ItemBase {
@@ -41,7 +42,7 @@ public class ItemInventaire extends ItemBase {
 	}
 	
 	public String toString (){
-		return quantite + "/" + getPrix () + "/" + getDescription();
+		return quantite + " " + getPrix () + " " + getDescription();
 	}
 	
 }

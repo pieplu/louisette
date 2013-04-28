@@ -187,11 +187,9 @@ public class Tp3 implements ActionListener {
 	}
 
 	/**
-	 * retourne l'item descItem dans la liste d'item, retourne null si pas
-	 * trouver
-	 * 
-	 * @param descItem
-	 * @return
+	 * Methode qui trouve un item dans la liste et le retourne
+	 * @param descItem l'item a trouver
+	 * @return retourne l'item descItem dans la liste, null sinon
 	 */
 	public static ItemInventaire trouverItemDansInventaire(String descItem) {
 		ItemInventaire itemTrouver = null;
@@ -207,7 +205,7 @@ public class Tp3 implements ActionListener {
 
 	/**
 	 * ajoute un item contenant les descriptions dans la liste d'item si la
-	 * description n'est pas d�j� pr�sente et si la description n'est pas vide
+	 * description n'est pas deja presente et si la description n'est pas vide
 	 * ou null
 	 * 
 	 * @param desc
@@ -233,7 +231,7 @@ public class Tp3 implements ActionListener {
 
 	/**
 	 * Augmente la quantite d'un item desc dans la liste d'inventaire si l'item
-	 * est pr�sent
+	 * est present
 	 * 
 	 * @param desc
 	 * @param quantite
@@ -255,7 +253,7 @@ public class Tp3 implements ActionListener {
 
 	/**
 	 * Retire la quantite d'un item desc dans la liste d'inventaire si l'item
-	 * est pr�sent et le met a 0 si la quantite serait negative
+	 * est present et le met a 0 si la quantite serait negative
 	 * 
 	 * @param desc
 	 * @param quantite
@@ -314,7 +312,7 @@ public class Tp3 implements ActionListener {
 
 	public static String monterUnItem(ItemInventaire item) {
 		return "Description : " + item.getDescription() + "\nPrix : "
-				+ item.getPrix() + "\nQuantit� : " + item.getQuantite();
+				+ item.getPrix() + "\nQuantite : " + item.getQuantite();
 	}
 
 	@Override
@@ -335,7 +333,7 @@ public class Tp3 implements ActionListener {
 				ItemInventaire itemSelect = trouverItemDansInventaire((String) menu
 						.getSelectedItem());
 				String quantite = JOptionPane.showInputDialog(null,
-						monterUnItem(itemSelect) + "\nQuantit� � ajout� : \n",
+						monterUnItem(itemSelect) + "\nQuantite a ajoute : \n",
 						"Saisie", JOptionPane.INFORMATION_MESSAGE);
 
 				int quant;
@@ -345,7 +343,7 @@ public class Tp3 implements ActionListener {
 						quant = Integer.parseInt(quantite);
 						if (quant <= 0) {
 							JOptionPane.showMessageDialog(null,
-									"Quantit� n�gative ou null", "Erreur",
+									"Quantite negative ou null", "Erreur",
 									JOptionPane.ERROR_MESSAGE);
 						} else {
 							ajouterQuantiteItem(itemSelect.getDescription(),
@@ -353,7 +351,7 @@ public class Tp3 implements ActionListener {
 						}
 					} catch (NumberFormatException e) {
 						JOptionPane.showMessageDialog(null,
-								"Quantit� non-num�rique", "Erreur",
+								"Quantite non-numerique", "Erreur",
 								JOptionPane.ERROR_MESSAGE);
 					}
 
@@ -361,7 +359,7 @@ public class Tp3 implements ActionListener {
 
 			} else {
 				JOptionPane.showMessageDialog(null,
-						"Veuillez s�lectionner un item", "Erreur",
+						"Veuillez selectionner un item", "Erreur",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -371,7 +369,7 @@ public class Tp3 implements ActionListener {
 				ItemInventaire itemSelect = trouverItemDansInventaire((String) menu
 						.getSelectedItem());
 				String quantite = JOptionPane.showInputDialog(null,
-						monterUnItem(itemSelect) + "\nQuantit� � retir� : \n",
+						monterUnItem(itemSelect) + "\nQuantite a retirer : \n",
 						"Saisie", JOptionPane.INFORMATION_MESSAGE);
 
 				int quant;
@@ -381,11 +379,11 @@ public class Tp3 implements ActionListener {
 						quant = Integer.parseInt(quantite);
 						if (quant <= 0) {
 							JOptionPane.showMessageDialog(null,
-									"Quantit� n�gative ou null", "Erreur",
+									"Quantite negative ou null", "Erreur",
 									JOptionPane.ERROR_MESSAGE);
 						} else if (itemSelect.getQuantite() < quant) {
 							JOptionPane.showMessageDialog(null,
-									"Quantit� insufisante en inventaire",
+									"Quantite insufisante en inventaire",
 									"Erreur", JOptionPane.ERROR_MESSAGE);
 						} else {
 							retirerQuantiteItem(itemSelect.getDescription(),
@@ -393,7 +391,7 @@ public class Tp3 implements ActionListener {
 						}
 					} catch (NumberFormatException e) {
 						JOptionPane.showMessageDialog(null,
-								"Quantit� non-num�rique", "Erreur",
+								"Quantite non-numerique", "Erreur",
 								JOptionPane.ERROR_MESSAGE);
 					}
 
@@ -401,7 +399,7 @@ public class Tp3 implements ActionListener {
 
 			} else {
 				JOptionPane.showMessageDialog(null,
-						"Veuillez s�lectionner un item", "Erreur",
+						"Veuillez selectionner un item", "Erreur",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -409,24 +407,24 @@ public class Tp3 implements ActionListener {
 		if (source == rechercher) {
 
 			String recherche = JOptionPane.showInputDialog(null,
-					"\nChaine � recherch� : \n", "Saisie",
+					"\nChaine a rechercher : \n", "Saisie",
 					JOptionPane.INFORMATION_MESSAGE);
 			ItemInventaire itemSelect = trouverItemDansInventaire(recherche);
 
 			if (itemSelect == null) {
 				JOptionPane.showMessageDialog(null,
-						"Aucun item ne contient la cha�ne " + recherche,
-						"R�sultat de la recherche de \"" + recherche + "\"",
+						"Aucun item ne contient la chaine " + recherche,
+						"Resultat de la recherche de \"" + recherche + "\"",
 						JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(null,
-						"Aucun item ne contient la cha�ne " + recherche,
-						"R�sultat de la recherche de \"" + recherche + "\"",
+						"Aucun item ne contient la chaine " + recherche,
+						"Resultat de la recherche de \"" + recherche + "\"",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 			JOptionPane.showMessageDialog(null,
-					"Aucun item ne contient la cha�ne " + recherche,
-					"R�sultat de la recherche de \"" + recherche + "\"",
+					"Aucun item ne contient la chaine " + recherche,
+					"Resultat de la recherche de \"" + recherche + "\"",
 					JOptionPane.INFORMATION_MESSAGE);
 
 		}
@@ -436,19 +434,19 @@ public class Tp3 implements ActionListener {
 				
 				ItemInventaire itemSelect = trouverItemDansInventaire((String) menu
 						.getSelectedItem());
-				int choix = JOptionPane.showConfirmDialog(null, "�tes vous s�r de vouloir �liminer totalement \""
-						+ itemSelect.getDescription() + "\" ?", "T'es-tu-s�r?", JOptionPane.WARNING_MESSAGE);
+				int choix = JOptionPane.showConfirmDialog(null, "etes vous sur de vouloir eliminer totalement \""
+						+ itemSelect.getDescription() + "\" ?", "T'es-tu-sur?", JOptionPane.WARNING_MESSAGE);
 				
 				if(choix == JOptionPane.OK_OPTION){
 					int quant = itemSelect.getQuantite();
 					retirerQuantiteItem(itemSelect.getDescription(), quant);
 					menu.removeItem(itemSelect.getDescription());
-					// A FAIRE:  �liminer du fichier
+					// A FAIRE:  eliminer du fichier
 				}
 				
 			} else {
 				JOptionPane.showMessageDialog(null,
-						"Veuillez s�lectionner un item", "Erreur",
+						"Veuillez selectionner un item", "Erreur",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -488,7 +486,7 @@ public class Tp3 implements ActionListener {
            	 JLabel prixNom = new JLabel("Prix :");
             	 myPanel.add(prixNom);
            	 myPanel.add(prix);
-           	 JLabel quantNom = new JLabel("Quantité :");
+           	 JLabel quantNom = new JLabel("Quantite :");
             	 myPanel.add(quantNom);
 
             String quantite = JOptionPane.showInputDialog(null, myPanel, "Nouvel item", JOptionPane.INFORMATION_MESSAGE);
@@ -526,10 +524,10 @@ public class Tp3 implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Prix non-numerique", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
 
+            }
 
 
-
-        }
+		}
 
 	}
 

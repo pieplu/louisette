@@ -316,7 +316,6 @@ public class Tp3 implements ActionListener {
 
 		Object source = event.getSource();
 
-		
 		if (source == info) 
 			actionInfo();
 
@@ -326,60 +325,65 @@ public class Tp3 implements ActionListener {
 		if (source == retirer) 
 			actionRetirer();
 		
-
-		// BOUTON rechercher
 		if (source == rechercher) {
-
+			int result = 0;
+			ArrayList<ItemInventaire> temp = new ArrayList<ItemInventaire>();
 			String recherche = JOptionPane.showInputDialog(null, "\nChaine a rechercher : \n", "Saisie",
 					JOptionPane.INFORMATION_MESSAGE);
-			ItemInventaire itemSelect = trouverItemDansInventaire(recherche);
+			System.out.print(recherche);
+			if (recherche != ""){
+				for (int i =0; i < itemList.size(); i++){
+					result = itemList.get(i).getDescription().indexOf(recherche);
+					if (result != -1)
+						temp.add(itemList.get(i));
+				}
+				
+				if (temp.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Aucun item ne contient la chaine " + recherche,
+							"Resultat de la recherche de \"" + recherche + "\"", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					String affResultat = "";
+					for (int i =0; i < temp.size(); i++)
+						affResultat += temp.get(i).toString() + "\n";
 
-			if (itemSelect == null) {
-				JOptionPane.showMessageDialog(null, "Aucun item ne contient la chaine " + recherche,
-						"Resultat de la recherche de \"" + recherche + "\"", JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(null, "Aucun item ne contient la chaine " + recherche,
-						"Resultat de la recherche de \"" + recherche + "\"", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Resultat de la recherche de " + recherche +"\n" +affResultat,
+							"Resultat de la recherche de \"" + recherche + "\" \n", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
-			JOptionPane.showMessageDialog(null, "Aucun item ne contient la chaine " + recherche,
-					"Resultat de la recherche de \"" + recherche + "\"", JOptionPane.INFORMATION_MESSAGE);
-
+			
 		}
 		
 		if (source == eliminer) 
 			actionEliminer();
-		
 
-		// BOUTON contenu
-		if (source == contenu) {
+		if (source == contenu) 
+			for (int i = 0; i < itemList.size(); i ++)
+				System.out.println(itemList.get(i));
 
-			JOptionPane.showMessageDialog(null, "Le contenu  \"" + "\" ?", "Saisie",
-					JOptionPane.INFORMATION_MESSAGE);
-
-		}
-		
-		
 		if (source == enregistrer) {
-
 			int reponse = JOptionPane.showConfirmDialog(enregistrer, "Voulez-vous enregistrer?");
-			if (reponse == JOptionPane.YES_OPTION) {
-				try {
-					enregistrerInventaire();
-					JOptionPane.showMessageDialog(null, "Sauvegarde faite!");
-				} catch (IOException ex) {
-					JOptionPane.showMessageDialog(null, "Une erreur inconue est survenue");
-				}
-			}
-
+			if (reponse == JOptionPane.YES_OPTION) 
+				actionEnregstrer();
 		}
 
-		
 		if (source == nouveau) 
 			actionNouveau();
 		
 		
 		// BOUTON quitter
 
+	}
+
+	/**
+	 * 
+	 */
+	private void actionEnregstrer() {
+		try {
+			enregistrerInventaire();
+			JOptionPane.showMessageDialog(null, "Sauvegarde faite!");
+		} catch (IOException ex) {
+			JOptionPane.showMessageDialog(null, "Une erreur inconue est survenue");
+		}
 	}
 
 	/**

@@ -304,7 +304,7 @@ public class Tp3 implements ActionListener {
 		PrintWriter sortie = new PrintWriter(f);
 		for (int i = 0; i < itemList.size(); i++) {
 			String itemASauvegarderDansFichier = itemList.get(i).getQuantite()
-					+ "" + itemList.get(i).getPrix() + ""
+					+ " " + itemList.get(i).getPrix() + " "
 					+ itemList.get(i).getDescription();
 			sortie.println(itemASauvegarderDansFichier);
 		}
@@ -463,6 +463,18 @@ public class Tp3 implements ActionListener {
 					"Saisie", JOptionPane.INFORMATION_MESSAGE);
 
 	}
+	
+	if (source == enregistrer) {
+
+            int reponse = JOptionPane.showConfirmDialog(enregistrer, "Voulez-vous enregistrer?");
+            if (reponse == JOptionPane.YES_OPTION){
+                try {
+                    enregistrerInventaire();
+                } catch (IOException ex) {
+                }
+            }
+
+        }
 		
 		if (source == nouveau) {
 

@@ -316,81 +316,16 @@ public class Tp3 implements ActionListener {
 
 		Object source = event.getSource();
 
-		// BOUTON info
-		if (source == info) {
-			if (!menu.getSelectedItem().equals("Selectionnez un item"))
-				JOptionPane.showMessageDialog(null,
-						monterUnItem(trouverItemDansInventaire((String) menu.getSelectedItem())),
-						"Informations", JOptionPane.INFORMATION_MESSAGE);
-		}
+		
+		if (source == info) 
+			actionInfo();
 
-		// BOUTON ajouter
-		if (source == ajouter) {
-			if (!menu.getSelectedItem().equals("Selectionnez un item")) {
-				ItemInventaire itemSelect = trouverItemDansInventaire((String) menu.getSelectedItem());
-				String quantite = JOptionPane.showInputDialog(null, monterUnItem(itemSelect)
-						+ "\nQuantite a ajoute : \n", "Saisie", JOptionPane.INFORMATION_MESSAGE);
-
-				int quant;
-
-				if (!(quantite == null)) {
-					try {
-						quant = Integer.parseInt(quantite);
-						if (quant <= 0) {
-							JOptionPane.showMessageDialog(null, "Quantite negative ou null", "Erreur",
-									JOptionPane.ERROR_MESSAGE);
-						} else {
-							ajouterQuantiteItem(itemSelect.getDescription(), quant);
-						}
-					} catch (NumberFormatException e) {
-						JOptionPane.showMessageDialog(null, "Quantite non-numerique", "Erreur",
-								JOptionPane.ERROR_MESSAGE);
-					}
-
-				}
-
-			} else {
-				JOptionPane.showMessageDialog(null, "Veuillez selectionner un item", "Erreur",
-						JOptionPane.ERROR_MESSAGE);
-			}
-		}
-
-		// BOUTON retirer
-		if (source == retirer) {
-			if (!menu.getSelectedItem().equals("Selectionnez un item")) {
-				ItemInventaire itemSelect = trouverItemDansInventaire((String) menu.getSelectedItem());
-				String quantite = JOptionPane.showInputDialog(null, monterUnItem(itemSelect)
-						+ "\nQuantite a retirer : \n", "Saisie", JOptionPane.INFORMATION_MESSAGE);
-
-				int quant;
-
-				if (!(quantite == null)) {
-					try {
-						quant = Integer.parseInt(quantite);
-						if (quant <= 0) {
-							JOptionPane.showMessageDialog(null, "Quantite negative ou null", "Erreur",
-									JOptionPane.ERROR_MESSAGE);
-						} else if (itemSelect.getQuantite() < quant) {
-							JOptionPane.showMessageDialog(null, "Quantite insufisante en inventaire",
-									"Erreur", JOptionPane.ERROR_MESSAGE);
-						} else if( itemSelect.getQuantite() == quant){
-							itemList.remove(itemSelect);
-							menu.removeItem(itemSelect.getDescription());
-						} else{
-							retirerQuantiteItem(itemSelect.getDescription(), quant);
-						}
-					} catch (NumberFormatException e) {
-						JOptionPane.showMessageDialog(null, "Quantite non-numerique", "Erreur",
-								JOptionPane.ERROR_MESSAGE);
-					}
-
-				}
-
-			} else {
-				JOptionPane.showMessageDialog(null, "Veuillez selectionner un item", "Erreur",
-						JOptionPane.ERROR_MESSAGE);
-			}
-		}
+		if (source == ajouter) 
+			actionAjouter();
+		
+		if (source == retirer) 
+			actionRetirer();
+		
 
 		// BOUTON rechercher
 		if (source == rechercher) {
@@ -410,13 +345,11 @@ public class Tp3 implements ActionListener {
 					"Resultat de la recherche de \"" + recherche + "\"", JOptionPane.INFORMATION_MESSAGE);
 
 		}
-
-		// BOUTON eliminer
-		if (source == eliminer) {
-			actionEliminer();
-		}
-
 		
+		if (source == eliminer) 
+			actionEliminer();
+		
+
 		// BOUTON contenu
 		if (source == contenu) {
 
@@ -425,7 +358,7 @@ public class Tp3 implements ActionListener {
 
 		}
 		
-		// BOUTON enregistrer
+		
 		if (source == enregistrer) {
 
 			int reponse = JOptionPane.showConfirmDialog(enregistrer, "Voulez-vous enregistrer?");
@@ -440,15 +373,103 @@ public class Tp3 implements ActionListener {
 
 		}
 
-		// BOUTON nouveau
-		if (source == nouveau) {
+		
+		if (source == nouveau) 
 			actionNouveau();
-		}
+		
 		
 		// BOUTON quitter
 
 	}
 
+	/**
+	 * Methode d'action pour le bouton information
+	 */
+	private void actionInfo() {
+		if (!menu.getSelectedItem().equals("Selectionnez un item"))
+			JOptionPane.showMessageDialog(null,
+					monterUnItem(trouverItemDansInventaire((String) menu.getSelectedItem())),
+					"Informations", JOptionPane.INFORMATION_MESSAGE);
+		else 
+			JOptionPane.showMessageDialog(null, "Veuillez selectionner un item", "Erreur",
+					JOptionPane.ERROR_MESSAGE);
+	}
+
+	/**
+	 * Methode d'action lors d'un ajout
+	 */
+	private void actionAjouter() {
+		if (!menu.getSelectedItem().equals("Selectionnez un item")) {
+			ItemInventaire itemSelect = trouverItemDansInventaire((String) menu.getSelectedItem());
+			String quantite = JOptionPane.showInputDialog(null, monterUnItem(itemSelect)
+					+ "\nQuantite a ajoute : \n", "Saisie", JOptionPane.INFORMATION_MESSAGE);
+
+			int quant;
+
+			if (!(quantite == null)) {
+				try {
+					quant = Integer.parseInt(quantite);
+					if (quant <= 0) {
+						JOptionPane.showMessageDialog(null, "Quantite negative ou null", "Erreur",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						ajouterQuantiteItem(itemSelect.getDescription(), quant);
+					}
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Quantite non-numerique", "Erreur",
+							JOptionPane.ERROR_MESSAGE);
+				}
+
+			}
+
+		} else {
+			JOptionPane.showMessageDialog(null, "Veuillez selectionner un item", "Erreur",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	/**
+	 * Methode d'action lors d'un retrait
+	 */
+	private void actionRetirer() {
+		if (!menu.getSelectedItem().equals("Selectionnez un item")) {
+			ItemInventaire itemSelect = trouverItemDansInventaire((String) menu.getSelectedItem());
+			String quantite = JOptionPane.showInputDialog(null, monterUnItem(itemSelect)
+					+ "\nQuantite a retirer : \n", "Saisie", JOptionPane.INFORMATION_MESSAGE);
+
+			int quant;
+
+			if (!(quantite == null)) {
+				try {
+					quant = Integer.parseInt(quantite);
+					if (quant <= 0) {
+						JOptionPane.showMessageDialog(null, "Quantite negative ou null", "Erreur",
+								JOptionPane.ERROR_MESSAGE);
+					} else if (itemSelect.getQuantite() < quant) {
+						JOptionPane.showMessageDialog(null, "Quantite insufisante en inventaire",
+								"Erreur", JOptionPane.ERROR_MESSAGE);
+					} else if( itemSelect.getQuantite() == quant){
+						itemList.remove(itemSelect);
+						menu.removeItem(itemSelect.getDescription());
+					} else{
+						retirerQuantiteItem(itemSelect.getDescription(), quant);
+					}
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Quantite non-numerique", "Erreur",
+							JOptionPane.ERROR_MESSAGE);
+				}
+
+			}
+
+		} else {
+			JOptionPane.showMessageDialog(null, "Veuillez selectionner un item", "Erreur",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	/**
+	 * Methode d'action lors d'une elimination
+	 */
 	private void actionEliminer() {
 		if (!menu.getSelectedItem().equals("Selectionnez un item")) {
 			ItemInventaire itemSelect = trouverItemDansInventaire((String) menu.getSelectedItem());
@@ -467,6 +488,9 @@ public class Tp3 implements ActionListener {
 		}
 	}
 
+	/**
+	 * Methode d'action lors de l'ajout d'un nouvel item
+	 */
 	private void actionNouveau() {
 		JPanel myPanel = new JPanel();
 		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
@@ -524,7 +548,11 @@ public class Tp3 implements ActionListener {
 
 		}
 	}
-
+	
+	
+	/**
+	 * Main de notre programme
+	 */
 	public static void main(String[] args) throws IOException {
 		new Tp3();
 	}

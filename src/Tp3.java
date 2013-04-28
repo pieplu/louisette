@@ -69,7 +69,7 @@ public class Tp3 implements ActionListener {
 		nouveau = new JButton("Nouveau");
 		nouveau.setBounds(10, 160, 110, 20);
 		nouveau.addActionListener(this);
-		
+
 		contenu = new JButton("Contenu");
 		contenu.setBounds(10, 190, 110, 20);
 		contenu.addActionListener(this);
@@ -188,7 +188,9 @@ public class Tp3 implements ActionListener {
 
 	/**
 	 * Methode qui trouve un item dans la liste et le retourne
-	 * @param descItem l'item a trouver
+	 * 
+	 * @param descItem
+	 *            l'item a trouver
 	 * @return retourne l'item descItem dans la liste, null sinon
 	 */
 	public static ItemInventaire trouverItemDansInventaire(String descItem) {
@@ -431,101 +433,110 @@ public class Tp3 implements ActionListener {
 
 		if (source == eliminer) {
 			if (!menu.getSelectedItem().equals("Selectionnez un item")) {
-				
+
 				ItemInventaire itemSelect = trouverItemDansInventaire((String) menu
 						.getSelectedItem());
-				int choix = JOptionPane.showConfirmDialog(null, "etes vous sur de vouloir eliminer totalement \""
-						+ itemSelect.getDescription() + "\" ?", "T'es-tu-sur?", JOptionPane.WARNING_MESSAGE);
-				
-				if(choix == JOptionPane.OK_OPTION){
+				int choix = JOptionPane.showConfirmDialog(null,
+						"etes vous sur de vouloir eliminer totalement \""
+								+ itemSelect.getDescription() + "\" ?",
+						"T'es-tu-sur?", JOptionPane.WARNING_MESSAGE);
+
+				if (choix == JOptionPane.OK_OPTION) {
 					int quant = itemSelect.getQuantite();
 					retirerQuantiteItem(itemSelect.getDescription(), quant);
 					menu.removeItem(itemSelect.getDescription());
-					// A FAIRE:  eliminer du fichier
 				}
-				
+
 			} else {
 				JOptionPane.showMessageDialog(null,
 						"Veuillez selectionner un item", "Erreur",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		
-		
+
 		if (source == contenu) {
-			
-			
-			JOptionPane.showMessageDialog(null,
-					"Le contenu  \""
-							+ "\" ?",
+
+			JOptionPane.showMessageDialog(null, "Le contenu  \"" + "\" ?",
 					"Saisie", JOptionPane.INFORMATION_MESSAGE);
 
-	}
-	
-	if (source == enregistrer) {
+		}
 
-            int reponse = JOptionPane.showConfirmDialog(enregistrer, "Voulez-vous enregistrer?");
-            if (reponse == JOptionPane.YES_OPTION){
-                try {
-                    enregistrerInventaire();
-                } catch (IOException ex) {
-                }
-            }
+		if (source == enregistrer) {
 
-        }
-		
+			int reponse = JOptionPane.showConfirmDialog(enregistrer,
+					"Voulez-vous enregistrer?");
+			if (reponse == JOptionPane.YES_OPTION) {
+				try {
+					enregistrerInventaire();
+				} catch (IOException ex) {
+				}
+			}
+
+		}
+
 		if (source == nouveau) {
 
-           	 JPanel myPanel = new JPanel();
-           	 myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
-           	 JTextField desc = new JTextField(20);
-            	 JTextField prix = new JTextField(20);
-            	 JLabel descNom = new JLabel("Description :");
-           	 myPanel.add(descNom);
-           	 myPanel.add(desc);
-           	 JLabel prixNom = new JLabel("Prix :");
-            	 myPanel.add(prixNom);
-           	 myPanel.add(prix);
-           	 JLabel quantNom = new JLabel("Quantite :");
-            	 myPanel.add(quantNom);
+			JPanel myPanel = new JPanel();
+			myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+			JTextField desc = new JTextField(20);
+			JTextField prix = new JTextField(20);
+			JLabel descNom = new JLabel("Description :");
+			myPanel.add(descNom);
+			myPanel.add(desc);
+			JLabel prixNom = new JLabel("Prix :");
+			myPanel.add(prixNom);
+			myPanel.add(prix);
+			JLabel quantNom = new JLabel("Quantite :");
+			myPanel.add(quantNom);
 
-            String quantite = JOptionPane.showInputDialog(null, myPanel, "Nouvel item", JOptionPane.INFORMATION_MESSAGE);
-            double prixFormat;
-            int quant;
+			String quantite = JOptionPane.showInputDialog(null, myPanel,
+					"Nouvel item", JOptionPane.INFORMATION_MESSAGE);
+			double prixFormat;
+			int quant;
+			
+//JOptionPane.showConfirmDialog(null, myPanel, "Nouvel item", optionType, messageType)
 
-            boolean testSiItemPresent = false;
-            for (int i = 0; i < itemList.size(); i++) {
-                if (itemList.get(i).getDescription().equals(desc.getText())) {
-                    testSiItemPresent = true;
-                }
-            }
-            if (testSiItemPresent == true) {
-                JOptionPane.showMessageDialog(null, "L'item est deja dans l'inventaire", "Erreur", JOptionPane.ERROR_MESSAGE);
-            } else {
+			boolean testSiItemPresent = false;
+			for (int i = 0; i < itemList.size(); i++)
+				if (itemList.get(i).getDescription().equals(desc.getText()))
+					testSiItemPresent = true;
 
-                try {
-                    prixFormat = Double.parseDouble(prix.getText());
-                    if (prixFormat <= 0) {
-                        JOptionPane.showMessageDialog(null, "Prix negatif ou null", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        try {
-                            quant = Integer.parseInt(quantite);
-                            if (quant <= 0) {
-                                JOptionPane.showMessageDialog(null, "Quantite negative ou null", "Erreur", JOptionPane.ERROR_MESSAGE);
-                            } else {
-                                itemList.add(new ItemInventaire(desc.getText(), prixFormat, quant));
-                                menu.addItem(desc.getText());
-                            }
-                        } catch (NumberFormatException e) {
-                            JOptionPane.showMessageDialog(null, "Quantite non-numerique", "Erreur", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Prix non-numerique", "Erreur", JOptionPane.ERROR_MESSAGE);
-                }
+			if (testSiItemPresent == true) {
+				JOptionPane.showMessageDialog(null,
+						"L'item est deja dans l'inventaire", "Erreur",
+						JOptionPane.ERROR_MESSAGE);
+			} else if (quantite != null) {	//pour évité un message d'erreur en cas d'anulation
+				
+				try {
+					prixFormat = Double.parseDouble(prix.getText());
+					if (prixFormat <= 0) {
+						JOptionPane.showMessageDialog(null,
+								"Prix negatif ou null", "Erreur",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						try {
+							quant = Integer.parseInt(quantite);
+							if (quant <= 0) {
+								JOptionPane.showMessageDialog(null,
+										"Quantite negative ou null", "Erreur",
+										JOptionPane.ERROR_MESSAGE);
+							} else {
+								itemList.add(new ItemInventaire(desc.getText(),
+										prixFormat, quant));
+								menu.addItem(desc.getText());
+							}
+						} catch (NumberFormatException e) {
+							JOptionPane.showMessageDialog(null,
+									"Quantite non-numerique", "Erreur",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Prix non-numerique",
+							"Erreur", JOptionPane.ERROR_MESSAGE);
+				}
 
-            }
-
+			}
 
 		}
 

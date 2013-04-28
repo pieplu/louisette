@@ -122,8 +122,7 @@ public class Tp3 implements ActionListener {
 	 * @return BufferedReader
 	 * @throws FileNotFoundException
 	 */
-	public static BufferedReader chargerFichierText()
-			throws FileNotFoundException {
+	public static BufferedReader chargerFichierText() throws FileNotFoundException {
 		BufferedReader listeTemporaire = null;
 		try {
 			String path = "inventaire.txt";
@@ -176,8 +175,7 @@ public class Tp3 implements ActionListener {
 					}
 				}
 				if (!(desc.equals("")) && !(desc.equals(" "))) {
-					ItemInventaire item = new ItemInventaire(desc, prix,
-							quantiter);
+					ItemInventaire item = new ItemInventaire(desc, prix, quantiter);
 					itemList.add(item);
 				}
 				desc = "";
@@ -217,8 +215,8 @@ public class Tp3 implements ActionListener {
 	 */
 	public static boolean ajouterUnItem(String desc, double prix, int quantite) {
 		boolean estAjouter = true;
-		if (!itemList.contains(trouverItemDansInventaire(desc))
-				&& !(desc.equals("")) && !(desc.equals(" ")) && !(desc == null)) {
+		if (!itemList.contains(trouverItemDansInventaire(desc)) && !(desc.equals("")) && !(desc.equals(" "))
+				&& !(desc == null)) {
 			if (prix <= 0 || quantite < 0) {
 				estAjouter = false;
 			} else {
@@ -274,11 +272,8 @@ public class Tp3 implements ActionListener {
 			if ((trouverItemDansInventaire(desc).getQuantite() - quantite) < 0) {
 				trouverItemDansInventaire(desc).setQuantite(0);
 			} else {
-				trouverItemDansInventaire(desc)
-						.setQuantite(
-								quantite
-										- trouverItemDansInventaire(desc)
-												.getQuantite());
+				trouverItemDansInventaire(desc).setQuantite(
+						quantite - trouverItemDansInventaire(desc).getQuantite());
 			}
 		}
 	}
@@ -303,9 +298,8 @@ public class Tp3 implements ActionListener {
 		FileWriter f = new FileWriter("inventaireSave.txt");
 		PrintWriter sortie = new PrintWriter(f);
 		for (int i = 0; i < itemList.size(); i++) {
-			String itemASauvegarderDansFichier = itemList.get(i).getQuantite()
-					+ " " + itemList.get(i).getPrix() + " "
-					+ itemList.get(i).getDescription();
+			String itemASauvegarderDansFichier = itemList.get(i).getQuantite() + " "
+					+ itemList.get(i).getPrix() + " " + itemList.get(i).getDescription();
 			sortie.println(itemASauvegarderDansFichier);
 		}
 		sortie.close();
@@ -313,8 +307,8 @@ public class Tp3 implements ActionListener {
 	}
 
 	public static String monterUnItem(ItemInventaire item) {
-		return "Description : " + item.getDescription() + "\nPrix : "
-				+ item.getPrix() + "\nQuantite : " + item.getQuantite();
+		return "Description : " + item.getDescription() + "\nPrix : " + item.getPrix() + "\nQuantite : "
+				+ item.getQuantite();
 	}
 
 	@Override
@@ -322,21 +316,20 @@ public class Tp3 implements ActionListener {
 
 		Object source = event.getSource();
 
+		// BOUTON info
 		if (source == info) {
 			if (!menu.getSelectedItem().equals("Selectionnez un item"))
 				JOptionPane.showMessageDialog(null,
-						monterUnItem(trouverItemDansInventaire((String) menu
-								.getSelectedItem())), "Informations",
-						JOptionPane.INFORMATION_MESSAGE);
+						monterUnItem(trouverItemDansInventaire((String) menu.getSelectedItem())),
+						"Informations", JOptionPane.INFORMATION_MESSAGE);
 		}
 
+		// BOUTON ajouter
 		if (source == ajouter) {
 			if (!menu.getSelectedItem().equals("Selectionnez un item")) {
-				ItemInventaire itemSelect = trouverItemDansInventaire((String) menu
-						.getSelectedItem());
-				String quantite = JOptionPane.showInputDialog(null,
-						monterUnItem(itemSelect) + "\nQuantite a ajoute : \n",
-						"Saisie", JOptionPane.INFORMATION_MESSAGE);
+				ItemInventaire itemSelect = trouverItemDansInventaire((String) menu.getSelectedItem());
+				String quantite = JOptionPane.showInputDialog(null, monterUnItem(itemSelect)
+						+ "\nQuantite a ajoute : \n", "Saisie", JOptionPane.INFORMATION_MESSAGE);
 
 				int quant;
 
@@ -344,35 +337,30 @@ public class Tp3 implements ActionListener {
 					try {
 						quant = Integer.parseInt(quantite);
 						if (quant <= 0) {
-							JOptionPane.showMessageDialog(null,
-									"Quantite negative ou null", "Erreur",
+							JOptionPane.showMessageDialog(null, "Quantite negative ou null", "Erreur",
 									JOptionPane.ERROR_MESSAGE);
 						} else {
-							ajouterQuantiteItem(itemSelect.getDescription(),
-									quant);
+							ajouterQuantiteItem(itemSelect.getDescription(), quant);
 						}
 					} catch (NumberFormatException e) {
-						JOptionPane.showMessageDialog(null,
-								"Quantite non-numerique", "Erreur",
+						JOptionPane.showMessageDialog(null, "Quantite non-numerique", "Erreur",
 								JOptionPane.ERROR_MESSAGE);
 					}
 
 				}
 
 			} else {
-				JOptionPane.showMessageDialog(null,
-						"Veuillez selectionner un item", "Erreur",
+				JOptionPane.showMessageDialog(null, "Veuillez selectionner un item", "Erreur",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
+		// BOUTON retirer
 		if (source == retirer) {
 			if (!menu.getSelectedItem().equals("Selectionnez un item")) {
-				ItemInventaire itemSelect = trouverItemDansInventaire((String) menu
-						.getSelectedItem());
-				String quantite = JOptionPane.showInputDialog(null,
-						monterUnItem(itemSelect) + "\nQuantite a retirer : \n",
-						"Saisie", JOptionPane.INFORMATION_MESSAGE);
+				ItemInventaire itemSelect = trouverItemDansInventaire((String) menu.getSelectedItem());
+				String quantite = JOptionPane.showInputDialog(null, monterUnItem(itemSelect)
+						+ "\nQuantite a retirer : \n", "Saisie", JOptionPane.INFORMATION_MESSAGE);
 
 				int quant;
 
@@ -380,166 +368,161 @@ public class Tp3 implements ActionListener {
 					try {
 						quant = Integer.parseInt(quantite);
 						if (quant <= 0) {
-							JOptionPane.showMessageDialog(null,
-									"Quantite negative ou null", "Erreur",
+							JOptionPane.showMessageDialog(null, "Quantite negative ou null", "Erreur",
 									JOptionPane.ERROR_MESSAGE);
 						} else if (itemSelect.getQuantite() < quant) {
-							JOptionPane.showMessageDialog(null,
-									"Quantite insufisante en inventaire",
+							JOptionPane.showMessageDialog(null, "Quantite insufisante en inventaire",
 									"Erreur", JOptionPane.ERROR_MESSAGE);
-						} else {
-							retirerQuantiteItem(itemSelect.getDescription(),
-									quant);
+						} else if( itemSelect.getQuantite() == quant){
+							itemList.remove(itemSelect);
+							menu.removeItem(itemSelect.getDescription());
+						} else{
+							retirerQuantiteItem(itemSelect.getDescription(), quant);
 						}
 					} catch (NumberFormatException e) {
-						JOptionPane.showMessageDialog(null,
-								"Quantite non-numerique", "Erreur",
+						JOptionPane.showMessageDialog(null, "Quantite non-numerique", "Erreur",
 								JOptionPane.ERROR_MESSAGE);
 					}
 
 				}
 
 			} else {
-				JOptionPane.showMessageDialog(null,
-						"Veuillez selectionner un item", "Erreur",
+				JOptionPane.showMessageDialog(null, "Veuillez selectionner un item", "Erreur",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
+		// BOUTON rechercher
 		if (source == rechercher) {
 
-			String recherche = JOptionPane.showInputDialog(null,
-					"\nChaine a rechercher : \n", "Saisie",
+			String recherche = JOptionPane.showInputDialog(null, "\nChaine a rechercher : \n", "Saisie",
 					JOptionPane.INFORMATION_MESSAGE);
 			ItemInventaire itemSelect = trouverItemDansInventaire(recherche);
 
 			if (itemSelect == null) {
-				JOptionPane.showMessageDialog(null,
-						"Aucun item ne contient la chaine " + recherche,
-						"Resultat de la recherche de \"" + recherche + "\"",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Aucun item ne contient la chaine " + recherche,
+						"Resultat de la recherche de \"" + recherche + "\"", JOptionPane.INFORMATION_MESSAGE);
 			} else {
-				JOptionPane.showMessageDialog(null,
-						"Aucun item ne contient la chaine " + recherche,
-						"Resultat de la recherche de \"" + recherche + "\"",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Aucun item ne contient la chaine " + recherche,
+						"Resultat de la recherche de \"" + recherche + "\"", JOptionPane.INFORMATION_MESSAGE);
 			}
-			JOptionPane.showMessageDialog(null,
-					"Aucun item ne contient la chaine " + recherche,
-					"Resultat de la recherche de \"" + recherche + "\"",
+			JOptionPane.showMessageDialog(null, "Aucun item ne contient la chaine " + recherche,
+					"Resultat de la recherche de \"" + recherche + "\"", JOptionPane.INFORMATION_MESSAGE);
+
+		}
+
+		// BOUTON eliminer
+		if (source == eliminer) {
+			actionEliminer();
+		}
+
+		
+		// BOUTON contenu
+		if (source == contenu) {
+
+			JOptionPane.showMessageDialog(null, "Le contenu  \"" + "\" ?", "Saisie",
 					JOptionPane.INFORMATION_MESSAGE);
 
 		}
-
-		if (source == eliminer) {
-			if (!menu.getSelectedItem().equals("Selectionnez un item")) {
-
-				ItemInventaire itemSelect = trouverItemDansInventaire((String) menu
-						.getSelectedItem());
-				int choix = JOptionPane.showConfirmDialog(null,
-						"etes vous sur de vouloir eliminer totalement \""
-								+ itemSelect.getDescription() + "\" ?",
-						"T'es-tu-sur?", JOptionPane.WARNING_MESSAGE);
-
-				if (choix == JOptionPane.OK_OPTION) {
-					int quant = itemSelect.getQuantite();
-					retirerQuantiteItem(itemSelect.getDescription(), quant);
-					menu.removeItem(itemSelect.getDescription());
-				}
-
-			} else {
-				JOptionPane.showMessageDialog(null,
-						"Veuillez selectionner un item", "Erreur",
-						JOptionPane.ERROR_MESSAGE);
-			}
-		}
-
-		if (source == contenu) {
-
-			JOptionPane.showMessageDialog(null, "Le contenu  \"" + "\" ?",
-					"Saisie", JOptionPane.INFORMATION_MESSAGE);
-
-		}
-
+		
+		// BOUTON enregistrer
 		if (source == enregistrer) {
 
-			int reponse = JOptionPane.showConfirmDialog(enregistrer,
-					"Voulez-vous enregistrer?");
+			int reponse = JOptionPane.showConfirmDialog(enregistrer, "Voulez-vous enregistrer?");
 			if (reponse == JOptionPane.YES_OPTION) {
 				try {
 					enregistrerInventaire();
+					JOptionPane.showMessageDialog(null, "Sauvegarde faite!");
 				} catch (IOException ex) {
+					JOptionPane.showMessageDialog(null, "Une erreur inconue est survenue");
 				}
 			}
 
 		}
 
+		// BOUTON nouveau
 		if (source == nouveau) {
+			actionNouveau();
+		}
+		
+		// BOUTON quitter
 
-			JPanel myPanel = new JPanel();
-			myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
-			JTextField desc = new JTextField(20);
-			JTextField prix = new JTextField(20);
-			JLabel descNom = new JLabel("Description :");
-			myPanel.add(descNom);
-			myPanel.add(desc);
-			JLabel prixNom = new JLabel("Prix :");
-			myPanel.add(prixNom);
-			myPanel.add(prix);
-			JLabel quantNom = new JLabel("Quantite :");
-			myPanel.add(quantNom);
+	}
 
-			String quantite = JOptionPane.showInputDialog(null, myPanel,
-					"Nouvel item", JOptionPane.INFORMATION_MESSAGE);
-			double prixFormat;
-			int quant;
-			
-//JOptionPane.showConfirmDialog(null, myPanel, "Nouvel item", optionType, messageType)
+	private void actionEliminer() {
+		if (!menu.getSelectedItem().equals("Selectionnez un item")) {
+			ItemInventaire itemSelect = trouverItemDansInventaire((String) menu.getSelectedItem());
+			int choix = JOptionPane.showConfirmDialog(null,
+					"etes vous sur de vouloir eliminer totalement \"" + itemSelect.getDescription()
+							+ "\" ?", "T'es-tu-sur?", JOptionPane.WARNING_MESSAGE);
 
-			boolean testSiItemPresent = false;
-			for (int i = 0; i < itemList.size(); i++)
-				if (itemList.get(i).getDescription().equals(desc.getText()))
-					testSiItemPresent = true;
+			if (choix == JOptionPane.OK_OPTION) {
+				itemList.remove(itemSelect);
+				menu.removeItem(itemSelect.getDescription());
+			}
 
-			if (testSiItemPresent == true) {
-				JOptionPane.showMessageDialog(null,
-						"L'item est deja dans l'inventaire", "Erreur",
-						JOptionPane.ERROR_MESSAGE);
-			} else if (quantite != null) {	//pour évité un message d'erreur en cas d'anulation
-				
-				try {
-					prixFormat = Double.parseDouble(prix.getText());
-					if (prixFormat <= 0) {
-						JOptionPane.showMessageDialog(null,
-								"Prix negatif ou null", "Erreur",
-								JOptionPane.ERROR_MESSAGE);
-					} else {
-						try {
-							quant = Integer.parseInt(quantite);
-							if (quant <= 0) {
-								JOptionPane.showMessageDialog(null,
-										"Quantite negative ou null", "Erreur",
-										JOptionPane.ERROR_MESSAGE);
-							} else {
-								itemList.add(new ItemInventaire(desc.getText(),
-										prixFormat, quant));
-								menu.addItem(desc.getText());
-							}
-						} catch (NumberFormatException e) {
-							JOptionPane.showMessageDialog(null,
-									"Quantite non-numerique", "Erreur",
+		} else {
+			JOptionPane.showMessageDialog(null, "Veuillez selectionner un item", "Erreur",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	private void actionNouveau() {
+		JPanel myPanel = new JPanel();
+		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+		JTextField desc = new JTextField(20);
+		JTextField prix = new JTextField(20);
+		JLabel descNom = new JLabel("Description :");
+		myPanel.add(descNom);
+		myPanel.add(desc);
+		JLabel prixNom = new JLabel("Prix :");
+		myPanel.add(prixNom);
+		myPanel.add(prix);
+		JLabel quantNom = new JLabel("Quantite :");
+		myPanel.add(quantNom);
+
+		String quantite = JOptionPane.showInputDialog(null, myPanel, "Nouvel item",
+				JOptionPane.INFORMATION_MESSAGE);
+		double prixFormat;
+		int quant;
+
+		boolean testSiItemPresent = false;
+		for (int i = 0; i < itemList.size(); i++)
+			if (itemList.get(i).getDescription().equals(desc.getText()))
+				testSiItemPresent = true;
+
+		if (testSiItemPresent == true) {
+			JOptionPane.showMessageDialog(null, "L'item est deja dans l'inventaire", "Erreur",
+					JOptionPane.ERROR_MESSAGE);
+		} else if (quantite != null) { // eviter un message d'erreur en cas
+										// d'anulation
+
+			try {
+				prixFormat = Double.parseDouble(prix.getText());
+				if (prixFormat <= 0) {
+					JOptionPane.showMessageDialog(null, "Prix negatif ou null", "Erreur",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					try {
+						quant = Integer.parseInt(quantite);
+						if (quant <= 0) {
+							JOptionPane.showMessageDialog(null, "Quantite negative ou null", "Erreur",
 									JOptionPane.ERROR_MESSAGE);
+						} else {
+							itemList.add(new ItemInventaire(desc.getText(), prixFormat, quant));
+							menu.addItem(desc.getText());
 						}
+					} catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "Quantite non-numerique", "Erreur",
+								JOptionPane.ERROR_MESSAGE);
 					}
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Prix non-numerique",
-							"Erreur", JOptionPane.ERROR_MESSAGE);
 				}
-
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Prix non-numerique", "Erreur",
+						JOptionPane.ERROR_MESSAGE);
 			}
 
 		}
-
 	}
 
 	public static void main(String[] args) throws IOException {

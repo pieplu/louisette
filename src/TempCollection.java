@@ -1,5 +1,4 @@
 
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -15,7 +14,7 @@ public class TempCollection {
 		} catch (FileNotFoundException e) {
 			System.out.println("Le fichier de sauvegarde est absent.");
 		}
-		
+
 		return listeTemporaire;
 	}
 
@@ -54,8 +53,7 @@ public class TempCollection {
 					}
 				}
 				if (!(desc.equals("")) && !(desc.equals(" "))) {
-					ItemInventaire item = new ItemInventaire(desc, prix,
-							quantiter);
+					ItemInventaire item = new ItemInventaire(desc, prix, quantiter);
 					itemList.add(item);
 				}
 				desc = "";
@@ -66,9 +64,9 @@ public class TempCollection {
 
 	public static ItemInventaire trouverItemDansInventaire(String descItem) {
 		ItemInventaire itemTrouver = null;
-		
-		for(int i = 0; i < itemList.size() ; i++){
-			if(itemList.get(i).getDescription().equals(descItem)){
+
+		for (int i = 0; i < itemList.size(); i++) {
+			if (itemList.get(i).getDescription().equals(descItem)) {
 				itemTrouver = itemList.get(i);
 			}
 		}
@@ -103,37 +101,35 @@ public class TempCollection {
 			if ((trouverItemDansInventaire(desc).getQuantite() - quantite) < 0) {
 				trouverItemDansInventaire(desc).setQuantite(0);
 			} else {
-				trouverItemDansInventaire(desc)
-						.setQuantite(
-								quantite
-										- trouverItemDansInventaire(desc)
-												.getQuantite());
+				trouverItemDansInventaire(desc).setQuantite(
+						quantite - trouverItemDansInventaire(desc).getQuantite());
 			}
 		}
 	}
 
 	public static void retirerItem(String desc) {
 		if (itemList.contains(trouverItemDansInventaire(desc))) {
-			itemList.remove (trouverItemDansInventaire(desc));
+			itemList.remove(trouverItemDansInventaire(desc));
 		}
 	}
-	
-	public static void enregistrerInventaire () throws IOException{
-		FileWriter f = new FileWriter ("inventaireSave.txt");
-		PrintWriter sortie = new PrintWriter ( f );
-		for(int i = 0;i < itemList.size();i++){
-			String itemASauvegarderDansFichier = itemList.get(i).getQuantite() + "" + itemList.get(i).getPrix() + "" + itemList.get(i).getDescription();
+
+	public static void enregistrerInventaire() throws IOException {
+		FileWriter f = new FileWriter("inventaireSave.txt");
+		PrintWriter sortie = new PrintWriter(f);
+		for (int i = 0; i < itemList.size(); i++) {
+			String itemASauvegarderDansFichier = itemList.get(i).getQuantite() + ""
+					+ itemList.get(i).getPrix() + "" + itemList.get(i).getDescription();
 			sortie.println(itemASauvegarderDansFichier);
 		}
 		sortie.close();
-		
+
 	}
 
 	public static void main(String[] args) throws IOException {
 
 		chargerItemDuFichierDansListe();
 		System.out.println(itemList);
-		enregistrerInventaire ();
+		enregistrerInventaire();
 	}
 
 }

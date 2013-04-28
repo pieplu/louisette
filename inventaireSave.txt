@@ -1,0 +1,8 @@
+999 10.0 table
+1000 5.0 mitaines pour le four
+100 2500.0 De tres belles machines a cafe espresso italiennes
+1000 2.89 Stylo
+200 15.45 Mammouths en peluche
+1700 20.0 Tuque avec des oreilles
+2000 1.0 Carre rouge 2 cm X 2 cm
+100 56.32 Costume de banane

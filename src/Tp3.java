@@ -335,23 +335,17 @@ public class Tp3 implements ActionListener {
 			String quantite = JOptionPane.showInputDialog(null, monterUnItem(itemSelect)
 					+ "\nQuantite a ajoute : \n", "Saisie", JOptionPane.INFORMATION_MESSAGE);
 
-			int quant;
-
 			if (!(quantite == null)) {
 				try {
-					quant = Integer.parseInt(quantite);
-					if (quant <= 0) {
+					int quant = Integer.parseInt(quantite);
+					if (quant <= 0) 
 						msgErreur(QUANTITE_NEG);
-					} else {
+					 else 
 						ajouterQuantiteItem(itemSelect.getDescription(), quant);
-						estModifie = true;
-					}
 				} catch (NumberFormatException e) {
 					msgErreur(QUANTITE_NON_NUM);
 				}
-
 			}
-
 		} else {
 			msgErreur(SELECTIONNER_ITEM);
 		}
@@ -366,8 +360,8 @@ public class Tp3 implements ActionListener {
 	 * @param quantite
 	 */
 	private void ajouterQuantiteItem(String desc, int quantite) {
-			trouverItemDansInventaire(desc).setQuantite(
-					quantite + trouverItemDansInventaire(desc).getQuantite());
+		trouverItemDansInventaire(desc).setQuantite(quantite + trouverItemDansInventaire(desc).getQuantite());
+		estModifie = true;
 	}
 
 
@@ -380,21 +374,17 @@ public class Tp3 implements ActionListener {
 			String quantite = JOptionPane.showInputDialog(null, monterUnItem(itemSelect)
 					+ "\nQuantite a retirer : \n", "Saisie", JOptionPane.INFORMATION_MESSAGE);
 
-			int quant;
-
 			if (!(quantite == null)) {
 				try {
-					quant = Integer.parseInt(quantite);
-					if (quant <= 0) {
+					int quant = Integer.parseInt(quantite);
+					if (quant <= 0) 
 						msgErreur(QUANTITE_NEG);
-					} else if (itemSelect.getQuantite() < quant) {
+					 else if (itemSelect.getQuantite() < quant) 
 						msgErreur(QUANTITE_INSSUFISANTE);
-					} else if (itemSelect.getQuantite() == quant) {
+					 else if (itemSelect.getQuantite() == quant) 
 						eliminer(itemSelect);
-					} else {
+					 else 
 						retirerQuantiteItem(itemSelect.getDescription(), quant);
-						estModifie = true;
-					}
 				} catch (NumberFormatException e) {
 					msgErreur(QUANTITE_NON_NUM);
 				}
@@ -412,8 +402,8 @@ public class Tp3 implements ActionListener {
 	 * @param quantite
 	 */
 	private void retirerQuantiteItem(String desc, int quantite) {
-				trouverItemDansInventaire(desc).setQuantite(trouverItemDansInventaire(desc).getQuantite() -
-						quantite);
+		trouverItemDansInventaire(desc).setQuantite(trouverItemDansInventaire(desc).getQuantite() -	quantite);
+		estModifie = true;
 	}
 
 
@@ -421,11 +411,11 @@ public class Tp3 implements ActionListener {
 	 * Methode d'action pour la recherche
 	 */
 	private void actionRechercher() {
-		int result = 0;
 		ArrayList<ItemInventaire> temp = new ArrayList<ItemInventaire>();
 		String recherche = JOptionPane.showInputDialog(null, "\nChaine a rechercher : \n", "Saisie",
 				JOptionPane.INFORMATION_MESSAGE);
 		if (!(recherche == null || recherche.isEmpty())) {
+			int result = 0;
 			for (int i = 0; i < itemList.size(); i++) {
 				result = itemList.get(i).getDescription().indexOf(recherche);
 				if (result != -1)
@@ -467,7 +457,6 @@ public class Tp3 implements ActionListener {
 
 	/**
 	 * Methode qui elimine totalement un item
-	 * 
 	 * @param itemSelect
 	 */
 	private void eliminer(ItemInventaire itemSelect) {

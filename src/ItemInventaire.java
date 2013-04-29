@@ -1,25 +1,29 @@
-
 public class ItemInventaire extends ItemBase {
 
 	private int quantite; // quantite de l'item en stock
+
 
 	public ItemInventaire() {
 		super("", 0);
 		this.quantite = 0;
 	}
 
+
 	public ItemInventaire(String desc, double prix, int quantite) {
 		super(desc, prix);
 		this.quantite = quantite;
 	}
 
+
 	public int getQuantite() {
 		return quantite;
 	}
 
+
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
 	}
+
 
 	public boolean equals(Object o) {
 		boolean test = true;
@@ -38,6 +42,7 @@ public class ItemInventaire extends ItemBase {
 
 		return test;
 	}
+
 
 	public String toString() {
 		return quantite + " " + getPrix() + " " + getDescription();

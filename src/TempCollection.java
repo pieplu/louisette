@@ -1,10 +1,10 @@
-
 import java.io.*;
 import java.util.ArrayList;
 
 public class TempCollection {
 
 	static ArrayList<ItemInventaire> itemList = new ArrayList<ItemInventaire>();
+
 
 	public static BufferedReader chargerFichierText() throws FileNotFoundException {
 		BufferedReader listeTemporaire = null;
@@ -17,6 +17,7 @@ public class TempCollection {
 
 		return listeTemporaire;
 	}
+
 
 	public static void chargerItemDuFichierDansListe() throws IOException {
 		BufferedReader inventaireSauvegarder = chargerFichierText();
@@ -62,6 +63,7 @@ public class TempCollection {
 		inventaireSauvegarder.close();
 	}
 
+
 	public static ItemInventaire trouverItemDansInventaire(String descItem) {
 		ItemInventaire itemTrouver = null;
 
@@ -73,6 +75,7 @@ public class TempCollection {
 
 		return itemTrouver;
 	}
+
 
 	public static boolean ajouterUnItem(String desc, double prix, int quantite) {
 		boolean estAjouter = true;
@@ -89,12 +92,14 @@ public class TempCollection {
 		return estAjouter;
 	}
 
+
 	public static void ajouterQuantiteItem(String desc, int quantite) {
 		if (!(quantite <= 0)) {
 			trouverItemDansInventaire(desc).setQuantite(
 					quantite + trouverItemDansInventaire(desc).getQuantite());
 		}
 	}
+
 
 	public static void retirerQuantiteItem(String desc, int quantite) {
 		if (!(quantite <= 0)) {
@@ -107,11 +112,13 @@ public class TempCollection {
 		}
 	}
 
+
 	public static void retirerItem(String desc) {
 		if (itemList.contains(trouverItemDansInventaire(desc))) {
 			itemList.remove(trouverItemDansInventaire(desc));
 		}
 	}
+
 
 	public static void enregistrerInventaire() throws IOException {
 		FileWriter f = new FileWriter("inventaireSave.txt");
@@ -124,6 +131,7 @@ public class TempCollection {
 		sortie.close();
 
 	}
+
 
 	public static void main(String[] args) throws IOException {
 

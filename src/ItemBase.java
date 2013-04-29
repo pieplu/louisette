@@ -13,6 +13,7 @@ public abstract class ItemBase {
 	private double prix; // prix a l'unite
 	private String description; // description de l'item
 
+
 	/**
 	 * Construit un item sans description et prix 0
 	 * 
@@ -23,6 +24,7 @@ public abstract class ItemBase {
 		this("", 0);
 	}
 
+
 	/**
 	 * Construit un item avec la description specifiee et le prix 0
 	 * 
@@ -32,6 +34,7 @@ public abstract class ItemBase {
 	public ItemBase(String desc) {
 		this(desc, 0);
 	}
+
 
 	/**
 	 * Construit un item avec la description et le prix passes en parametres.
@@ -46,6 +49,7 @@ public abstract class ItemBase {
 		this.prix = prix;
 	}
 
+
 	/**
 	 * Retourne la description de l'item.
 	 * 
@@ -54,6 +58,7 @@ public abstract class ItemBase {
 	public String getDescription() {
 		return this.description;
 	}
+
 
 	/**
 	 * Retourne le prix de l'item.
@@ -64,6 +69,7 @@ public abstract class ItemBase {
 		return this.prix;
 	}
 
+
 	/**
 	 * Modifie le prix de l'item.
 	 * 
@@ -73,6 +79,7 @@ public abstract class ItemBase {
 	public void setPrix(double nouveauPrix) {
 		this.prix = nouveauPrix;
 	}
+
 
 	/**
 	 * Determine si deux items sont egaux Les classes derivant de cette classe

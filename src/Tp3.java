@@ -366,18 +366,8 @@ public class Tp3 implements ActionListener {
 	 * @param quantite
 	 */
 	private void ajouterQuantiteItem(String desc, int quantite) {
-		boolean itemPresent = false;
-
-		for (int i = 0; i < itemList.size(); i++) {
-			if (itemList.get(i).getDescription().equals(desc)) {
-				itemPresent = true;
-			}
-		}
-
-		if (!(quantite <= 0) && itemPresent == true) {
 			trouverItemDansInventaire(desc).setQuantite(
 					quantite + trouverItemDansInventaire(desc).getQuantite());
-		}
 	}
 
 
@@ -417,29 +407,13 @@ public class Tp3 implements ActionListener {
 
 	/**
 	 * Retire la quantite d'un item desc dans la liste d'inventaire si l'item
-	 * est present et le met a 0 si la quantite serait negative
-	 * 
+	 * est present
 	 * @param desc
 	 * @param quantite
 	 */
 	private void retirerQuantiteItem(String desc, int quantite) {
-
-		boolean itemPresent = false;
-
-		for (int i = 0; i < itemList.size(); i++) {
-			if (itemList.get(i).getDescription().equals(desc)) {
-				itemPresent = true;
-			}
-		}
-
-		if (!(quantite <= 0) && itemPresent == true) {
-			if ((trouverItemDansInventaire(desc).getQuantite() - quantite) < 0) {
-				trouverItemDansInventaire(desc).setQuantite(0);
-			} else {
-				trouverItemDansInventaire(desc).setQuantite(
-						quantite - trouverItemDansInventaire(desc).getQuantite());
-			}
-		}
+				trouverItemDansInventaire(desc).setQuantite(trouverItemDansInventaire(desc).getQuantite() -
+						quantite);
 	}
 
 
@@ -451,8 +425,7 @@ public class Tp3 implements ActionListener {
 		ArrayList<ItemInventaire> temp = new ArrayList<ItemInventaire>();
 		String recherche = JOptionPane.showInputDialog(null, "\nChaine a rechercher : \n", "Saisie",
 				JOptionPane.INFORMATION_MESSAGE);
-		System.out.print(recherche);
-		if (recherche != "") {
+		if (!(recherche == null || recherche.isEmpty())) {
 			for (int i = 0; i < itemList.size(); i++) {
 				result = itemList.get(i).getDescription().indexOf(recherche);
 				if (result != -1)
@@ -578,7 +551,7 @@ public class Tp3 implements ActionListener {
 	 * l'utilisateur
 	 */
 	private void actionEnregistrer() {
-		int reponse = JOptionPane.showConfirmDialog(enregistrer, "Voulez-vous enregistrer?");
+		int reponse = JOptionPane.showConfirmDialog(enregistrer, "Voulez-vous enregistrer?", "Enregistrer", JOptionPane.YES_NO_OPTION);
 		if (reponse == JOptionPane.YES_OPTION)
 			gestionEnregistrement();
 	}
@@ -591,6 +564,7 @@ public class Tp3 implements ActionListener {
 	private void gestionEnregistrement() {
 		try {
 			enregistrerInventaire();
+			estModifie = false;
 			JOptionPane.showMessageDialog(null, "Sauvegarde faite!");
 		} catch (IOException ex) {
 			JOptionPane.showMessageDialog(null, "Une erreur inconue est survenue");
@@ -604,7 +578,7 @@ public class Tp3 implements ActionListener {
 	 */
 	private void actionQuitter() {
 		if (estModifie) {
-			int choix = JOptionPane.showConfirmDialog(null, "L'inventaire a ete modifie",
+			int choix = JOptionPane.showConfirmDialog(null, "L'inventaire a ete modifie\nVoulez-vous enregistrer avant de quitter?",
 					"Risque de perte de donnees", JOptionPane.YES_NO_CANCEL_OPTION);
 
 			if (choix == JOptionPane.OK_OPTION) {

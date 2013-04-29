@@ -1,3 +1,11 @@
+/**
+* Ce fichier contient l'implemantation de la class ItemBase pour notre TP3
+* @author Dominique Menard et Alexis Pieplu
+* Codes permanents : MEND21058300 et PIEA07058900
+* Courriel : menard.dominique.4@courrier.uqam.ca et pieplu.alexis@uqam.ca
+* Cours : INF2120-10
+* @version 2013-04-29
+*/
 public class ItemInventaire extends ItemBase {
 
 	private int quantite; // quantite de l'item en stock

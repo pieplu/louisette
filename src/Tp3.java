@@ -26,14 +26,22 @@ public class Tp3 implements ActionListener {
 	JButton enregistrer;
 	JButton quitter;
 
-	Boolean estModifie;
+	private Boolean estModifie;
+
+	private static final int QUANTITE_NON_NUM = 1;
+	private static final int QUANTITE_NEG = 2;
+	private static final int QUANTITE_INSSUFISANTE = 3;
+	private static final int PRIX_NON_NUM = 4;
+	private static final int PRIX_NEGATIF = 5;
+	private static final int SELECTIONNER_ITEM = 6;
+	private static final int ITEM_PRESENT = 7;
+
 
 	public Tp3() throws IOException {
 
 		chargerItemDuFichierDansListe();
 		estModifie = false;
-		
-		
+
 		// ===== LA FENETRE =====
 		fenetre = new JFrame("I n v e n t a i r e");
 		fenetre.setBounds(200, 200, 400, 600);
@@ -43,9 +51,9 @@ public class Tp3 implements ActionListener {
 		menu = new JComboBox<String>();
 		menu.addActionListener(this);
 		menu.addItem("Selectionnez un item");
-		for (int i = 0; i < itemList.size(); i++) 
+		for (int i = 0; i < itemList.size(); i++)
 			menu.addItem(itemList.get(i).getDescription());
-		
+
 		// ===== BOUTONS =====
 
 		info = new JButton("Informations");
@@ -117,124 +125,12 @@ public class Tp3 implements ActionListener {
 
 
 	/**
-	 * ajoute un item contenant les descriptions dans la liste d'item si la
-	 * description n'est pas deja presente et si la description n'est pas vide
-	 * ou null
-	 * 
-	 * @param desc
-	 * @param prix
-	 * @param quantite
-	 * @return true si ajouter, false sinon
-	 */
-	public static boolean ajouterUnItem(String desc, double prix, int quantite) {
-		boolean estAjouter = true;
-		if (!itemList.contains(trouverItemDansInventaire(desc)) && !(desc.equals("")) && !(desc.equals(" "))
-				&& !(desc == null)) {
-			if (prix <= 0 || quantite < 0) {
-				estAjouter = false;
-			} else {
-				itemList.add(new ItemInventaire(desc, prix, quantite));
-			}
-		} else {
-			estAjouter = false;
-		}
-
-		return estAjouter;
-	}
-
-
-	/**
-	 * Augmente la quantite d'un item desc dans la liste d'inventaire si l'item
-	 * est present
-	 * 
-	 * @param desc
-	 * @param quantite
-	 */
-	public static void ajouterQuantiteItem(String desc, int quantite) {
-		boolean itemPresent = false;
-
-		for (int i = 0; i < itemList.size(); i++) {
-			if (itemList.get(i).getDescription().equals(desc)) {
-				itemPresent = true;
-			}
-		}
-
-		if (!(quantite <= 0) && itemPresent == true) {
-			trouverItemDansInventaire(desc).setQuantite(
-					quantite + trouverItemDansInventaire(desc).getQuantite());
-		}
-	}
-
-
-	/**
-	 * Retire la quantite d'un item desc dans la liste d'inventaire si l'item
-	 * est present et le met a 0 si la quantite serait negative
-	 * 
-	 * @param desc
-	 * @param quantite
-	 */
-	public static void retirerQuantiteItem(String desc, int quantite) {
-
-		boolean itemPresent = false;
-
-		for (int i = 0; i < itemList.size(); i++) {
-			if (itemList.get(i).getDescription().equals(desc)) {
-				itemPresent = true;
-			}
-		}
-
-		if (!(quantite <= 0) && itemPresent == true) {
-			if ((trouverItemDansInventaire(desc).getQuantite() - quantite) < 0) {
-				trouverItemDansInventaire(desc).setQuantite(0);
-			} else {
-				trouverItemDansInventaire(desc).setQuantite(
-						quantite - trouverItemDansInventaire(desc).getQuantite());
-			}
-		}
-	}
-
-
-	/**
-	 * retire l'item desc de la liste d'item si present
-	 * 
-	 * @param desc
-	 */
-	public static void retirerItem(String desc) {
-		if (itemList.contains(trouverItemDansInventaire(desc))) {
-			itemList.remove(trouverItemDansInventaire(desc));
-		}
-	}
-
-
-	/**
-	 * Methode qui trouve un item dans la liste et le retourne
-	 * 
-	 * @param descItem
-	 *            l'item a trouver
-	 * @return retourne l'item descItem dans la liste, null sinon
-	 */
-	public static ItemInventaire trouverItemDansInventaire(String descItem) {
-		ItemInventaire itemTrouver = null;
-		for (int i = 0; i < itemList.size(); i++) 
-			if (itemList.get(i).getDescription().equals(descItem)) 
-				itemTrouver = itemList.get(i);
-		return itemTrouver;
-	}
-
-
-	public static String monterUnItem(ItemInventaire item) {
-		return "Description : " + item.getDescription() + "\nPrix : " + item.getPrix() + "\nQuantite : "
-				+ item.getQuantite();
-	}
-
-
-	/**
 	 * Charge le fichier texte de sauvergarde dans un BufferedReader
 	 * 
-	 * @return BufferedReader
+	 * @return listeTemporaire
 	 * @throws FileNotFoundException
 	 */
-	public static BufferedReader chargerFichierText() throws FileNotFoundException {
+	private static BufferedReader chargerFichierText() throws FileNotFoundException {
 		BufferedReader listeTemporaire = null;
 		try {
 			String path = "inventaire.txt";
@@ -242,7 +138,7 @@ public class Tp3 implements ActionListener {
 		} catch (FileNotFoundException e) {
 			System.out.println("Le fichier de sauvegarde est absent.");
 		}
-	
+
 		return listeTemporaire;
 	}
 
@@ -253,14 +149,14 @@ public class Tp3 implements ActionListener {
 	 * 
 	 * @throws IOException
 	 */
-	public static void chargerItemDuFichierDansListe() throws IOException {
+	private static void chargerItemDuFichierDansListe() throws IOException {
 		BufferedReader inventaireSauvegarder = chargerFichierText();
 		String itemTemp = "";
-	
+
 		int quantiter = 0;
 		double prix = 0;
 		String desc = "";
-	
+
 		while (!(itemTemp == null)) {
 			itemTemp = inventaireSauvegarder.readLine();
 			if (!(itemTemp == null)) {
@@ -300,9 +196,10 @@ public class Tp3 implements ActionListener {
 
 	/**
 	 * Enregistre la liste d'item dans le fichier texte de sauvegarde
+	 * 
 	 * @throws IOException
 	 */
-	public static void enregistrerInventaire() throws IOException {
+	private static void enregistrerInventaire() throws IOException {
 		FileWriter f = new FileWriter("inventaireSave.txt");
 		PrintWriter sortie = new PrintWriter(f);
 		for (int i = 0; i < itemList.size(); i++) {
@@ -311,7 +208,7 @@ public class Tp3 implements ActionListener {
 			sortie.println(itemASauvegarderDansFichier);
 		}
 		sortie.close();
-	
+
 	}
 
 
@@ -329,7 +226,7 @@ public class Tp3 implements ActionListener {
 		if (source == retirer)
 			actionRetirer();
 
-		if (source == rechercher) 
+		if (source == rechercher)
 			actionRechercher();
 
 		if (source == eliminer)
@@ -339,7 +236,7 @@ public class Tp3 implements ActionListener {
 			for (int i = 0; i < itemList.size(); i++)
 				System.out.println(itemList.get(i));
 
-		if (source == enregistrer) 
+		if (source == enregistrer)
 			actionEnregistrer();
 
 		if (source == nouveau)
@@ -352,6 +249,44 @@ public class Tp3 implements ActionListener {
 
 
 	/**
+	 * Methode qui regroupe les messages d'erreurs
+	 * @param choix type du message d'erreur
+	 */
+	private void msgErreur(int choix) {
+		switch (choix) {
+		case (QUANTITE_NON_NUM):
+			JOptionPane.showMessageDialog(null, "Quantite non-numerique", "Erreur", 
+					JOptionPane.ERROR_MESSAGE);
+			break;
+		case (QUANTITE_NEG):
+			JOptionPane.showMessageDialog(null, "Quantite negative ou null", "Erreur",
+					JOptionPane.ERROR_MESSAGE);
+			break;
+		case (QUANTITE_INSSUFISANTE):
+			JOptionPane.showMessageDialog(null, "Quantite insufisante en inventaire", "Erreur",
+					JOptionPane.ERROR_MESSAGE);
+			break;
+		case (PRIX_NON_NUM):
+			JOptionPane.showMessageDialog(null, "Prix non-numerique", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		case (PRIX_NEGATIF):
+			JOptionPane.showMessageDialog(null, "Prix negatif ou null", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		case (SELECTIONNER_ITEM):
+			JOptionPane.showMessageDialog(null, "Veuillez selectionner un item", "Erreur",
+					JOptionPane.ERROR_MESSAGE);
+			break;
+		case (ITEM_PRESENT):
+			JOptionPane.showMessageDialog(null, "L'item est deja dans l'inventaire", "Erreur",
+					JOptionPane.ERROR_MESSAGE);
+			break;
+	
+		}
+	
+	}
+
+
+	/**
 	 * Methode d'action pour le bouton information
 	 */
 	private void actionInfo() {
@@ -360,8 +295,34 @@ public class Tp3 implements ActionListener {
 					monterUnItem(trouverItemDansInventaire((String) menu.getSelectedItem())), "Informations",
 					JOptionPane.INFORMATION_MESSAGE);
 		else
-			JOptionPane.showMessageDialog(null, "Veuillez selectionner un item", "Erreur",
-					JOptionPane.ERROR_MESSAGE);
+			msgErreur(SELECTIONNER_ITEM);
+	}
+
+
+	/**
+	 * Methode qui retourne un String d'un item pour GUI
+	 * 
+	 * @param item
+	 * @return affichage de l'item
+	 */
+	private String monterUnItem(ItemInventaire item) {
+		return "Description : " + item.getDescription() + "\nPrix : " + item.getPrix() + "\nQuantite : "
+				+ item.getQuantite();
+	}
+
+
+	/**
+	 * Methode qui trouve un item dans la liste et le retourne l'item a trouver
+	 * 
+	 * @param descItem
+	 * @return retourne l'item descItem dans la liste, null sinon
+	 */
+	private ItemInventaire trouverItemDansInventaire(String descItem) {
+		ItemInventaire itemTrouver = null;
+		for (int i = 0; i < itemList.size(); i++)
+			if (itemList.get(i).getDescription().equals(descItem))
+				itemTrouver = itemList.get(i);
+		return itemTrouver;
 	}
 
 
@@ -380,22 +341,42 @@ public class Tp3 implements ActionListener {
 				try {
 					quant = Integer.parseInt(quantite);
 					if (quant <= 0) {
-						JOptionPane.showMessageDialog(null, "Quantite negative ou null", "Erreur",
-								JOptionPane.ERROR_MESSAGE);
+						msgErreur(QUANTITE_NEG);
 					} else {
 						ajouterQuantiteItem(itemSelect.getDescription(), quant);
 						estModifie = true;
 					}
 				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Quantite non-numerique", "Erreur",
-							JOptionPane.ERROR_MESSAGE);
+					msgErreur(QUANTITE_NON_NUM);
 				}
 
 			}
 
 		} else {
-			JOptionPane.showMessageDialog(null, "Veuillez selectionner un item", "Erreur",
-					JOptionPane.ERROR_MESSAGE);
+			msgErreur(SELECTIONNER_ITEM);
+		}
+	}
+
+
+	/**
+	 * Augmente la quantite d'un item desc dans la liste d'inventaire si l'item
+	 * est present
+	 * 
+	 * @param desc
+	 * @param quantite
+	 */
+	private void ajouterQuantiteItem(String desc, int quantite) {
+		boolean itemPresent = false;
+
+		for (int i = 0; i < itemList.size(); i++) {
+			if (itemList.get(i).getDescription().equals(desc)) {
+				itemPresent = true;
+			}
+		}
+
+		if (!(quantite <= 0) && itemPresent == true) {
+			trouverItemDansInventaire(desc).setQuantite(
+					quantite + trouverItemDansInventaire(desc).getQuantite());
 		}
 	}
 
@@ -415,11 +396,9 @@ public class Tp3 implements ActionListener {
 				try {
 					quant = Integer.parseInt(quantite);
 					if (quant <= 0) {
-						JOptionPane.showMessageDialog(null, "Quantite negative ou null", "Erreur",
-								JOptionPane.ERROR_MESSAGE);
+						msgErreur(QUANTITE_NEG);
 					} else if (itemSelect.getQuantite() < quant) {
-						JOptionPane.showMessageDialog(null, "Quantite insufisante en inventaire", "Erreur",
-								JOptionPane.ERROR_MESSAGE);
+						msgErreur(QUANTITE_INSSUFISANTE);
 					} else if (itemSelect.getQuantite() == quant) {
 						eliminer(itemSelect);
 					} else {
@@ -427,21 +406,45 @@ public class Tp3 implements ActionListener {
 						estModifie = true;
 					}
 				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Quantite non-numerique", "Erreur",
-							JOptionPane.ERROR_MESSAGE);
+					msgErreur(QUANTITE_NON_NUM);
 				}
-
 			}
-
 		} else {
-			JOptionPane.showMessageDialog(null, "Veuillez selectionner un item", "Erreur",
-					JOptionPane.ERROR_MESSAGE);
+			msgErreur(SELECTIONNER_ITEM);
 		}
 	}
 
 
 	/**
+	 * Retire la quantite d'un item desc dans la liste d'inventaire si l'item
+	 * est present et le met a 0 si la quantite serait negative
 	 * 
+	 * @param desc
+	 * @param quantite
+	 */
+	private void retirerQuantiteItem(String desc, int quantite) {
+
+		boolean itemPresent = false;
+
+		for (int i = 0; i < itemList.size(); i++) {
+			if (itemList.get(i).getDescription().equals(desc)) {
+				itemPresent = true;
+			}
+		}
+
+		if (!(quantite <= 0) && itemPresent == true) {
+			if ((trouverItemDansInventaire(desc).getQuantite() - quantite) < 0) {
+				trouverItemDansInventaire(desc).setQuantite(0);
+			} else {
+				trouverItemDansInventaire(desc).setQuantite(
+						quantite - trouverItemDansInventaire(desc).getQuantite());
+			}
+		}
+	}
+
+
+	/**
+	 * Methode d'action pour la recherche
 	 */
 	private void actionRechercher() {
 		int result = 0;
@@ -455,16 +458,15 @@ public class Tp3 implements ActionListener {
 				if (result != -1)
 					temp.add(itemList.get(i));
 			}
-	
+
 			if (temp.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Aucun item ne contient la chaine " + recherche,
-						"Resultat de la recherche de \"" + recherche + "\"",
-						JOptionPane.INFORMATION_MESSAGE);
+						"Resultat de la recherche de \"" + recherche + "\"", JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				String affResultat = "";
 				for (int i = 0; i < temp.size(); i++)
 					affResultat += temp.get(i).toString() + "\n";
-	
+
 				JOptionPane.showMessageDialog(null, "Resultat de la recherche de " + recherche + "\n"
 						+ affResultat, "Resultat de la recherche de \"" + recherche + "\" \n",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -474,7 +476,7 @@ public class Tp3 implements ActionListener {
 
 
 	/**
-	 * Methode d'action lors d'une elimination
+	 * Methode d'action d'une elimination
 	 */
 	private void actionEliminer() {
 		if (!menu.getSelectedItem().equals("Selectionnez un item")) {
@@ -482,17 +484,17 @@ public class Tp3 implements ActionListener {
 			int choix = JOptionPane.showConfirmDialog(null, "etes vous sur de vouloir eliminer totalement \""
 					+ itemSelect.getDescription() + "\" ?", "T'es-tu-sur?", JOptionPane.WARNING_MESSAGE);
 
-			if (choix == JOptionPane.OK_OPTION) 
+			if (choix == JOptionPane.OK_OPTION)
 				eliminer(itemSelect);
 		} else {
-			JOptionPane.showMessageDialog(null, "Veuillez selectionner un item", "Erreur",
-					JOptionPane.ERROR_MESSAGE);
+			msgErreur(SELECTIONNER_ITEM);
 		}
 	}
 
 
 	/**
 	 * Methode qui elimine totalement un item
+	 * 
 	 * @param itemSelect
 	 */
 	private void eliminer(ItemInventaire itemSelect) {
@@ -503,7 +505,7 @@ public class Tp3 implements ActionListener {
 
 
 	/**
-	 *  Methode d'action lors de l'ajout d'un nouvel item
+	 * Methode d'action lors de l'ajout d'un nouvel item
 	 */
 	private void actionNouveau() {
 		JPanel myPanel = new JPanel();
@@ -529,35 +531,28 @@ public class Tp3 implements ActionListener {
 			if (itemList.get(i).getDescription().equals(desc.getText()))
 				testSiItemPresent = true;
 
-		if (testSiItemPresent == true) {
-			JOptionPane.showMessageDialog(null, "L'item est deja dans l'inventaire", "Erreur",
-					JOptionPane.ERROR_MESSAGE);
-		} else if (quantite != null) { // eviter un message d'erreur en cas d'anulation
-			
+		if (testSiItemPresent) {
+			msgErreur(ITEM_PRESENT);
+		} else if (quantite != null) { // pour eviter un message d'erreur en cas
+										// d'anulation
 			try {
 				prixFormat = Double.parseDouble(prix.getText());
 				if (prixFormat <= 0) {
-					JOptionPane.showMessageDialog(null, "Prix negatif ou null", "Erreur",
-							JOptionPane.ERROR_MESSAGE);
+					msgErreur(PRIX_NEGATIF);
 				} else {
 					try {
 						quant = Integer.parseInt(quantite);
 						if (quant <= 0) {
-							JOptionPane.showMessageDialog(null, "Quantite negative ou null", "Erreur",
-									JOptionPane.ERROR_MESSAGE);
+							msgErreur(QUANTITE_NEG);
 						} else {
-							itemList.add(new ItemInventaire(desc.getText(), prixFormat, quant));
-							menu.addItem(desc.getText());
-							estModifie = true;
+							ajouterUnItem(desc.getText(), prixFormat, quant);
 						}
 					} catch (NumberFormatException e) {
-						JOptionPane.showMessageDialog(null, "Quantite non-numerique", "Erreur",
-								JOptionPane.ERROR_MESSAGE);
+						msgErreur(QUANTITE_NON_NUM);
 					}
 				}
 			} catch (NumberFormatException e) {
-				JOptionPane
-						.showMessageDialog(null, "Prix non-numerique", "Erreur", JOptionPane.ERROR_MESSAGE);
+				msgErreur(PRIX_NON_NUM);
 			}
 
 		}
@@ -565,8 +560,22 @@ public class Tp3 implements ActionListener {
 
 
 	/**
-	 * Methode d'action du bouton enregistrer
-	 * Qui valide le choix de l'utilisateur
+	 * ajoute un item contenant les descriptions dans la liste d'item
+	 * 
+	 * @param desc
+	 * @param prix
+	 * @param quantite
+	 */
+	private void ajouterUnItem(String desc, double prix, int quantite) {
+		itemList.add(new ItemInventaire(desc, prix, quantite));
+		menu.addItem(desc);
+		estModifie = true;
+	}
+
+
+	/**
+	 * Methode d'action du bouton enregistrer Qui valide le choix de
+	 * l'utilisateur
 	 */
 	private void actionEnregistrer() {
 		int reponse = JOptionPane.showConfirmDialog(enregistrer, "Voulez-vous enregistrer?");
@@ -576,8 +585,8 @@ public class Tp3 implements ActionListener {
 
 
 	/**
-	 * Methode qui enregistre le contenue de la liste actuel dans un fichier
-	 * Et informe l'utilisateur de l'etat de cette action
+	 * Methode qui enregistre le contenue de la liste actuel dans un fichier Et
+	 * informe l'utilisateur de l'etat de cette action
 	 */
 	private void gestionEnregistrement() {
 		try {
@@ -590,19 +599,21 @@ public class Tp3 implements ActionListener {
 
 
 	/**
-	 * Methode qui premet, apres verification, de quitter le programme en proposant a l'utilisateur de l'enreistrer (si ce dernier a ete modife)
+	 * Methode qui premet, apres verification, de quitter le programme en
+	 * proposant a l'utilisateur de l'enreistrer (si ce dernier a ete modife)
 	 */
 	private void actionQuitter() {
-		if (estModifie){
-			int choix = JOptionPane.showConfirmDialog(null, "L'inventaire a ete modifie",  "Risque de perte de donnees", JOptionPane.YES_NO_CANCEL_OPTION);
-			
-			if (choix == JOptionPane.OK_OPTION){
+		if (estModifie) {
+			int choix = JOptionPane.showConfirmDialog(null, "L'inventaire a ete modifie",
+					"Risque de perte de donnees", JOptionPane.YES_NO_CANCEL_OPTION);
+
+			if (choix == JOptionPane.OK_OPTION) {
 				gestionEnregistrement();
 				System.exit(0);
-			}else if (choix == JOptionPane.NO_OPTION){
+			} else if (choix == JOptionPane.NO_OPTION) {
 				System.exit(0);
 			}
-		}else{
+		} else {
 			System.exit(0);
 		}
 	}

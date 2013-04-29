@@ -203,8 +203,7 @@ public class Tp3 implements ActionListener {
 		FileWriter f = new FileWriter("inventaireSave.txt");
 		PrintWriter sortie = new PrintWriter(f);
 		for (int i = 0; i < itemList.size(); i++) {
-			String itemASauvegarderDansFichier = itemList.get(i).getQuantite() + " "
-					+ itemList.get(i).getPrix() + " " + itemList.get(i).getDescription();
+			String itemASauvegarderDansFichier = itemList.get(i).toString();
 			sortie.println(itemASauvegarderDansFichier);
 		}
 		sortie.close();

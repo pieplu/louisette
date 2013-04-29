@@ -1,6 +1,6 @@
-1 28.99 Une belle bebelle
+2 28.99 Une belle bebelle
 999 10.0 table
-1000 5.0 mitaines pour le four
+998 5.0 mitaines pour le four
 100 2500.0 De tres belles machines a cafe espresso italiennes
 1000 2.89 Stylo
 200 15.45 Mammouths en peluche

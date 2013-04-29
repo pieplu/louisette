@@ -250,13 +250,15 @@ public class Tp3 implements ActionListener {
 
 	/**
 	 * Methode qui regroupe les messages d'erreurs
-	 * @param choix type du message d'erreur
+	 * 
+	 * @param choix
+	 *            type du message d'erreur
 	 */
 	private void msgErreur(int choix) {
 		switch (choix) {
 		case (QUANTITE_NON_NUM):
-			JOptionPane.showMessageDialog(null, "Quantite non-numerique", "Erreur", 
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane
+					.showMessageDialog(null, "Quantite non-numerique", "Erreur", JOptionPane.ERROR_MESSAGE);
 			break;
 		case (QUANTITE_NEG):
 			JOptionPane.showMessageDialog(null, "Quantite negative ou null", "Erreur",
@@ -280,9 +282,9 @@ public class Tp3 implements ActionListener {
 			JOptionPane.showMessageDialog(null, "L'item est deja dans l'inventaire", "Erreur",
 					JOptionPane.ERROR_MESSAGE);
 			break;
-	
+
 		}
-	
+
 	}
 
 
@@ -338,9 +340,9 @@ public class Tp3 implements ActionListener {
 			if (!(quantite == null)) {
 				try {
 					int quant = Integer.parseInt(quantite);
-					if (quant <= 0) 
+					if (quant <= 0)
 						msgErreur(QUANTITE_NEG);
-					 else 
+					else
 						ajouterQuantiteItem(itemSelect.getDescription(), quant);
 				} catch (NumberFormatException e) {
 					msgErreur(QUANTITE_NON_NUM);
@@ -377,13 +379,13 @@ public class Tp3 implements ActionListener {
 			if (!(quantite == null)) {
 				try {
 					int quant = Integer.parseInt(quantite);
-					if (quant <= 0) 
+					if (quant <= 0)
 						msgErreur(QUANTITE_NEG);
-					 else if (itemSelect.getQuantite() < quant) 
+					else if (itemSelect.getQuantite() < quant)
 						msgErreur(QUANTITE_INSSUFISANTE);
-					 else if (itemSelect.getQuantite() == quant) 
+					else if (itemSelect.getQuantite() == quant)
 						eliminer(itemSelect);
-					 else 
+					else
 						retirerQuantiteItem(itemSelect.getDescription(), quant);
 				} catch (NumberFormatException e) {
 					msgErreur(QUANTITE_NON_NUM);
@@ -398,11 +400,12 @@ public class Tp3 implements ActionListener {
 	/**
 	 * Retire la quantite d'un item desc dans la liste d'inventaire si l'item
 	 * est present
+	 * 
 	 * @param desc
 	 * @param quantite
 	 */
 	private void retirerQuantiteItem(String desc, int quantite) {
-		trouverItemDansInventaire(desc).setQuantite(trouverItemDansInventaire(desc).getQuantite() -	quantite);
+		trouverItemDansInventaire(desc).setQuantite(trouverItemDansInventaire(desc).getQuantite() - quantite);
 		estModifie = true;
 	}
 
@@ -457,6 +460,7 @@ public class Tp3 implements ActionListener {
 
 	/**
 	 * Methode qui elimine totalement un item
+	 * 
 	 * @param itemSelect
 	 */
 	private void eliminer(ItemInventaire itemSelect) {
@@ -486,7 +490,6 @@ public class Tp3 implements ActionListener {
 		String quantite = JOptionPane.showInputDialog(null, myPanel, "Nouvel item",
 				JOptionPane.INFORMATION_MESSAGE);
 		double prixFormat;
-		int quant;
 
 		boolean testSiItemPresent = false;
 		for (int i = 0; i < itemList.size(); i++)
@@ -495,20 +498,18 @@ public class Tp3 implements ActionListener {
 
 		if (testSiItemPresent) {
 			msgErreur(ITEM_PRESENT);
-		} else if (quantite != null) { // pour eviter un message d'erreur en cas
-										// d'anulation
+		} else if (quantite != null) { // pour eviter un message d'erreur en cas d'anulation
 			try {
 				prixFormat = Double.parseDouble(prix.getText());
 				if (prixFormat <= 0) {
 					msgErreur(PRIX_NEGATIF);
 				} else {
 					try {
-						quant = Integer.parseInt(quantite);
-						if (quant <= 0) {
+						int quant = Integer.parseInt(quantite);
+						if (quant <= 0) 
 							msgErreur(QUANTITE_NEG);
-						} else {
+						else 
 							ajouterUnItem(desc.getText(), prixFormat, quant);
-						}
 					} catch (NumberFormatException e) {
 						msgErreur(QUANTITE_NON_NUM);
 					}
@@ -540,7 +541,8 @@ public class Tp3 implements ActionListener {
 	 * l'utilisateur
 	 */
 	private void actionEnregistrer() {
-		int reponse = JOptionPane.showConfirmDialog(enregistrer, "Voulez-vous enregistrer?", "Enregistrer", JOptionPane.YES_NO_OPTION);
+		int reponse = JOptionPane.showConfirmDialog(enregistrer, "Voulez-vous enregistrer?", "Enregistrer",
+				JOptionPane.YES_NO_OPTION);
 		if (reponse == JOptionPane.YES_OPTION)
 			gestionEnregistrement();
 	}
@@ -567,7 +569,8 @@ public class Tp3 implements ActionListener {
 	 */
 	private void actionQuitter() {
 		if (estModifie) {
-			int choix = JOptionPane.showConfirmDialog(null, "L'inventaire a ete modifie\nVoulez-vous enregistrer avant de quitter?",
+			int choix = JOptionPane.showConfirmDialog(null,
+					"L'inventaire a ete modifie\nVoulez-vous enregistrer avant de quitter?",
 					"Risque de perte de donnees", JOptionPane.YES_NO_CANCEL_OPTION);
 
 			if (choix == JOptionPane.OK_OPTION) {
